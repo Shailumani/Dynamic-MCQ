@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\updateUI.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\initCanvas.js">
     <Files>
-      <File FileName="Assets\script\updateUI.js" Line="140" Column="2" />
+      <File FileName="Assets\script\updateUI.js" Line="99" Column="56" />
       <File FileName="Assets\script\DeleteInterface.js" Line="2" Column="1" />
       <File FileName="Assets\script\buttonEvent.js" Line="8" Column="41" />
       <File FileName="Assets\script\interFaceEvents.js" Line="37" Column="2" />
+      <File FileName="Assets\script\initCanvas.js" Line="3" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

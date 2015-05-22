@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\script\DeleteInterface.js" />
      <Compile Include="Assets\script\buttonEvent.js" />
+     <Compile Include="Assets\script\initCanvas.js" />
      <Compile Include="Assets\script\interFaceEvents.js" />
      <Compile Include="Assets\script\updateUI.js" />
  <Reference Include="UnityEngine.UI">

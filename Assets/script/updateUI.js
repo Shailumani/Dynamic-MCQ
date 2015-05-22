@@ -1,6 +1,7 @@
 ﻿#pragma strict
 import System.IO;
 var pos: Vector3;
+var isReplayed : boolean = false;
 var rot : Quaternion;
 var interFaceScript : DeleteInterface;
 var noOfAttempts : int=0;
@@ -65,7 +66,6 @@ function Start () {
 	var y = 300;
 	offsetButton = 1;
 	noOfCorrectAns=0;
-	isSubmitted = false;
 	changedAuto = false;
 	
 	falseAnswers=new Array();
@@ -77,7 +77,7 @@ function Start () {
 	//correctAnswers = [true, true, false, false];
 	//clickedButton = 1;
 	changedAuto=true;
-	if(noOfAttempts==0){
+	if(!isReplayed){
 	//questions = ["1", "2", "3", "Is Unity a game engine?", "Is Java a secure language?", "C is an object oriented language?", "MySQL is hierarchial based query language?"];
 		var buttonWidth = (xMax-xMin)/questions.length;
 		for(i=0;i<questions.length;i++){
@@ -92,10 +92,12 @@ function Start () {
 			newButtonText.text=""+(i+1);
 		}
 	}
-	pos = Vector3(525, 136, 0);
-	rot = Quaternion.identity;
-	newInterFace = Instantiate(interFace, pos, rot);
-	newInterFace.transform.parent = gameObject.transform;
+	if(isSubmitted==true || noOfAttempts==0){
+		pos = Vector3(525, 136, 0);
+		rot = Quaternion.identity;
+		newInterFace = Instantiate(interFace, pos, rot);
+		newInterFace.transform.parent = gameObject.transform;
+	}
 	textComponents = GetComponentsInChildren(UI.Text);
 	questionBox=textComponents[3+questions.length];
 	questionBox.text="Q"+clickedButton+" : "+questions[clickedButton-1];
@@ -106,15 +108,18 @@ function Start () {
 	trueBox.isOn=false;
 	falseBox.isOn=false;
 	changedAuto=false;
+	isSubmitted = false;
 	buttons = GetComponentsInChildren(UI.Button);
 	buttons[1+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;	
 	submitButton = buttons[0].GetComponent(UI.Button);
 	interFaceScript = newInterFace.GetComponent(DeleteInterface);
-	submitButton.onClick.AddListener(
-		function(){
-			interFaceScript.deleteObject();
-		}
-	);
+	if(!isReplayed){
+		submitButton.onClick.AddListener(
+			function(){
+				interFaceScript.deleteObject();
+			}
+		);
+	}
 }
 function setQuestion(questionNo : int){
 	questionBox.text="Q"+questionNo+" : "+questions[questionNo-1];
@@ -148,6 +153,9 @@ function submit(){
 	submitButton.colors.highlightedColor=Color.magenta;
 }
 function replay(){
+	isReplayed = true;
+	if(!isSubmitted)
+		noOfAttempts++;
 	buttons=GetComponentsInChildren(UI.Button);
 	for(var buttonComponent:Component in buttons){
 		lastButton=buttonComponent.GetComponent(UI.Button);
