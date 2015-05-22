@@ -3,6 +3,8 @@ import System.IO;
 var pos: Vector3;
 var isReplayed : boolean = false;
 var rot : Quaternion;
+var canvasScript : initCanvas;
+var userName : String;
 var interFaceScript : DeleteInterface;
 var noOfAttempts : int=0;
 var prefabButton : GameObject;
@@ -79,6 +81,8 @@ function Start () {
 	changedAuto=true;
 	if(!isReplayed){
 	//questions = ["1", "2", "3", "Is Unity a game engine?", "Is Java a secure language?", "C is an object oriented language?", "MySQL is hierarchial based query language?"];
+		canvasScript = GetComponentInParent(initCanvas);
+		userName = canvasScript.userName;
 		var buttonWidth = (xMax-xMin)/questions.length;
 		for(i=0;i<questions.length;i++){
 			pos = Vector3((buttonWidth/2)+i*buttonWidth,y,0);
@@ -148,7 +152,33 @@ function submit(){
 			noOfCorrectAns+=1;
 		}
 	}
-	result.text="No. of correct answers : "+noOfCorrectAns;
+	try{
+		var sr = new StreamReader("scores.txt");
+		var line = sr.ReadLine();
+		var otherScores=new Array();
+		result.text = "Recent Scores\n\n";
+		while(line!=null){
+			otherScores.push(line);
+			line=sr.ReadLine();
+		}
+		for(i=otherScores.length-3;i<otherScores.length;i++){
+			result.text = result.text + otherScores[i] + "\n";
+		}
+		sr.Close();
+	}
+	catch (e){
+		print("The file could not be found");
+		print(e.Message);
+	}
+	try{
+		var sw = new StreamWriter("scores.txt", true);
+		sw.WriteLine(userName + " : "+noOfCorrectAns);
+		sw.Close();
+	}
+	catch (e){
+		print(e.Message);
+	}
+	result.text = result.text + "\nHi! "+userName+", Your score is "+noOfCorrectAns;
 	submitButton.colors.normalColor=Color.magenta;
 	submitButton.colors.highlightedColor=Color.magenta;
 }
