@@ -51,10 +51,8 @@
      <Compile Include="Assets\script\initCanvas.js" />
      <Compile Include="Assets\script\interFaceEvents.js" />
      <Compile Include="Assets\script\updateUI.js" />
-     <None Include="Assets\questions.txt" />
      <None Include="Assets\questions.xml" />
-     <None Include="Assets\scores.txt" />
-     <None Include="Assets\answers.txt" />
+     <None Include="Assets\scores.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Softwares/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -30,19 +30,16 @@ var offsetButton : int;
 var falseAnswers : Array;
 var trueAnswers : Array;
 var correctAnswers : Array;
+var names : Array;
+var scores : Array;
 var changedAuto : boolean;
-function readXML(filepath : String, result : Array, col : int){
+function readXML(filepath : String, result : Array, tagName : String){
     var xmlDoc : XmlDocument = new XmlDocument();
     if(File.Exists (filepath))
     { 	
     	var x : XmlNodeList;
         xmlDoc.Load( filepath );
-        if(col==0){
-        	x = xmlDoc.GetElementsByTagName("Question");
-		}
-		else{
-			x = xmlDoc.GetElementsByTagName("Answer");
-		}
+        x = xmlDoc.GetElementsByTagName(tagName);
 		for (var i=0;i<x.Count;i++)
   		{ 
   			result.push(x.Item(i).InnerText);
@@ -56,8 +53,8 @@ function Start () {
 	clickedButton=1;
 	questions = new Array();
 	correctAnswers = new Array();
-	readXML("Assets/questions.xml", questions, 0);
-	readXML("Assets/questions.xml", correctAnswers, 1);
+	readXML("Assets/questions.xml", questions, "Question");
+	readXML("Assets/questions.xml", correctAnswers, "Answer");
 	for(i=0;i<correctAnswers.length;i++){
 		if(correctAnswers[i]=="1"){
 			correctAnswers[i] = true;
@@ -155,32 +152,32 @@ function submit(){
 			noOfCorrectAns+=1;
 		}
 	}
-	try{
-		var sr = new StreamReader("Assets/scores.txt");
-		var line = sr.ReadLine();
-		var otherScores=new Array();
-		result.text = "Recent Scores\n\n";
-		while(line!=null){
-			otherScores.push(line);
-			line=sr.ReadLine();
-		}
-		for(i=otherScores.length-3;i<otherScores.length;i++){
-			result.text = result.text + otherScores[i] + "\n";
-		}
-		sr.Close();
+	names = new Array();
+	scores = new Array();
+	readXML("Assets/scores.xml", names, "Name");
+	readXML("Assets/scores.xml", scores, "Score");
+	if(names.length<=2){
+		i=0;
 	}
-	catch (e){
-		print("The file could not be found");
-		print(e.Message);
+	else{
+		i = names.length-3;
 	}
-	try{
-		var sw = new StreamWriter("Assets/scores.txt", true);
-		sw.WriteLine(userName + " : "+noOfCorrectAns);
-		sw.Close();
+	result.text = "Recent Scores\n\n";
+	for(;i<names.length;i++){
+			result.text = result.text + names[i] + " : " + scores[i] + "\n";
 	}
-	catch (e){
-		print(e.Message);
-	}
+	var xmlDoc : XmlDocument = new XmlDocument();
+	xmlDoc.Load("Assets/scores.xml");
+	var elemRoot : XmlElement = xmlDoc.DocumentElement;
+	var itemAttempt : XmlElement = xmlDoc.CreateElement("Attempt");
+	elemRoot.AppendChild(itemAttempt);
+	var itemName : XmlElement = xmlDoc.CreateElement("Name");
+	itemAttempt.AppendChild(itemName);
+	var itemScore : XmlElement = xmlDoc.CreateElement("Score");
+	itemAttempt.AppendChild(itemScore);
+	itemName.InnerText = userName;
+	itemScore.InnerText = ""+noOfCorrectAns;
+	xmlDoc.Save("Assets/scores.xml");
 	result.text = result.text + "\nHi! "+userName+", Your score is "+noOfCorrectAns;
 	submitButton.colors.normalColor=Color.magenta;
 	submitButton.colors.highlightedColor=Color.magenta;
