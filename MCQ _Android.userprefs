@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\quizOver.js">
+    <Files>
+      <File FileName="Assets\script\quizOn.js" Line="92" Column="50" />
+      <File FileName="Assets\script\updateUI.js" Line="179" Column="42" />
+      <File FileName="Assets\script\startQuiz.js" Line="22" Column="26" />
+      <File FileName="Assets\script\quizOver.js" Line="40" Column="30" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
