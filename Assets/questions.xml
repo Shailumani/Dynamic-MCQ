@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<MCQ>
+	<Set>
+		<Question> This is Question 1</Question>
+		<Answer>1</Answer>
+	</Set>
+	<Set>
+		<Question> This is Question 2</Question>
+		<Answer>0</Answer>
+	</Set>
+	<Set>
+		<Question> This is Question 3</Question>
+		<Answer>0</Answer>
+	</Set>
+	<Set>
+		<Question> This is Question 4</Question>
+		<Answer>1</Answer>
+	</Set>
+	<Set>
+		<Question> This is Question 5</Question>
+		<Answer>1</Answer>
+	</Set>
+	<Set>
+		<Question> This is Question 6</Question>
+		<Answer>1</Answer>
+	</Set>
+	<Set>
+		<Question> This is Question 7</Question>
+		<Answer>0</Answer>
+	</Set>
+</MCQ>    	

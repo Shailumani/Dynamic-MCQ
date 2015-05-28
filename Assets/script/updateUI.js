@@ -1,5 +1,6 @@
 ﻿#pragma strict
 import System.IO;
+import System.Xml;
 var pos: Vector3;
 var isReplayed : boolean = false;
 var rot : Quaternion;
@@ -30,38 +31,40 @@ var falseAnswers : Array;
 var trueAnswers : Array;
 var correctAnswers : Array;
 var changedAuto : boolean;
+function readXML(filepath : String, result : Array, col : int){
+    var xmlDoc : XmlDocument = new XmlDocument();
+    if(File.Exists (filepath))
+    { 	
+    	var x : XmlNodeList;
+        xmlDoc.Load( filepath );
+        if(col==0){
+        	x = xmlDoc.GetElementsByTagName("Question");
+		}
+		else{
+			x = xmlDoc.GetElementsByTagName("Answer");
+		}
+		for (var i=0;i<x.Count;i++)
+  		{ 
+  			result.push(x.Item(i).InnerText);
+  		}
+	}
+}
 function Start () {
+	var sr : StreamReader;
+	var line : String;
+	var i : int;
 	clickedButton=1;
 	questions = new Array();
 	correctAnswers = new Array();
-	try{
-		var sr = new StreamReader("questions.txt");
-		var line = sr.ReadLine();
-		while(line!=null){
-			questions.push(line);
-			line=sr.ReadLine();
+	readXML("Assets/questions.xml", questions, 0);
+	readXML("Assets/questions.xml", correctAnswers, 1);
+	for(i=0;i<correctAnswers.length;i++){
+		if(correctAnswers[i]=="1"){
+			correctAnswers[i] = true;
 		}
-		sr.Close();
-	}
-	catch (e){
-		print("The file could not be found");
-		print(e.Message);
-	}
-	try{
-		sr = new StreamReader("answers.txt");
-		line = sr.ReadLine();
-		while(line!=null){
-			if(line=="1")
-				correctAnswers.push(true);
-			else
-				correctAnswers.push(false);
-			line=sr.ReadLine();
+		else{
+			correctAnswers[i] = false;
 		}
-		sr.Close();
-	}
-	catch (e){
-		print("The file could not be found");
-		print(e.Message);
 	}
 	var xMin = -515;
 	var xMax = 207;
@@ -72,7 +75,7 @@ function Start () {
 	
 	falseAnswers=new Array();
 	trueAnswers=new Array();
-	for(var i=0;i<questions.length;i++){
+	for(i=0;i<questions.length;i++){
 		falseAnswers.push(false);
 		trueAnswers.push(false);
 	}
@@ -153,7 +156,7 @@ function submit(){
 		}
 	}
 	try{
-		var sr = new StreamReader("scores.txt");
+		var sr = new StreamReader("Assets/scores.txt");
 		var line = sr.ReadLine();
 		var otherScores=new Array();
 		result.text = "Recent Scores\n\n";
@@ -171,7 +174,7 @@ function submit(){
 		print(e.Message);
 	}
 	try{
-		var sw = new StreamWriter("scores.txt", true);
+		var sw = new StreamWriter("Assets/scores.txt", true);
 		sw.WriteLine(userName + " : "+noOfCorrectAns);
 		sw.Close();
 	}
