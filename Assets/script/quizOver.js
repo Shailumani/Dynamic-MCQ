@@ -2,6 +2,8 @@
 import System.Xml;
 import System.IO;
 var names : Array;
+var defaultScorePath : String;
+var defaultPath : String;
 var scores : Array;
 var resultBox : UI.Text;
 function readXML(filepath : String, result : Array, tagName : String){
@@ -18,19 +20,28 @@ function readXML(filepath : String, result : Array, tagName : String){
 	}
 }
 function Start () {
+	defaultScorePath = Application.persistentDataPath;
+	var paths : Array = new Array();
+	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
+	defaultPath = paths[0]; 
 	resultBox = GetComponentInChildren(UI.Text);
 	names = new Array();
 	scores = new Array();
 	var i : int;
-	readXML(Application.persistentDataPath+"/scores.xml", names, "Name");
-	readXML(Application.persistentDataPath+"/scores.xml", scores, "Score");
-	if(names.length<=2){
+	readXML(defaultScorePath+"/scores.xml", names, "Name");
+	readXML(defaultScorePath+"/scores.xml", scores, "Score");
+	if(names.length<=3){
 		i=0;
 	}
 	else{
 		i = names.length-4;
 	}
-	resultBox.text = "Recent Scores\n\n";
+	if(names.length>1){
+		resultBox.text = "Recent Scores\n\n";
+	}
+	else{
+		resultBox.text = "";
+	}
 	for(;i<names.length-1;i++){
 			resultBox.text = resultBox.text + names[i] + " : " + scores[i] + "\n";
 	}
@@ -38,6 +49,9 @@ function Start () {
 }
 function replay(){
 	Application.LoadLevel("start");
+}
+function quit(){
+	Application.Quit();
 }
 function Update () {
 

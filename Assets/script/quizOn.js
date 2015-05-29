@@ -1,6 +1,8 @@
 ﻿#pragma strict
 import System.IO;
 import System.Xml;
+var defaultPath : String;
+var defaultScorePath : String;
 var pos: Vector3;
 var rot : Quaternion;
 var prefabButton : GameObject;
@@ -22,12 +24,16 @@ var trueAnswers : Array;
 var correctAnswers : Array;
 var changedAuto : boolean;
 function Start () {
+	defaultScorePath = Application.persistentDataPath;
+	var paths : Array = new Array();
+	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
+	defaultPath = paths[0]; 
 	var i : int;
 	clickedButton=1;
 	questions = new Array();
 	correctAnswers = new Array();
-	readXML(Application.persistentDataPath+"/questions.xml", questions, "Question");
-	readXML(Application.persistentDataPath+"/questions.xml", correctAnswers, "Answer");
+	readXML(defaultPath+"/questions.xml", questions, "Question");
+	readXML(defaultPath+"/questions.xml", correctAnswers, "Answer");
 	for(i=0;i<correctAnswers.length;i++){
 		if(correctAnswers[i]=="1"){
 			correctAnswers[i] = true;
@@ -84,12 +90,12 @@ function submit(){
 		}
 	}
 	var xmlDoc : XmlDocument = new XmlDocument();
-	xmlDoc.Load(Application.persistentDataPath+"/scores.xml");
+	xmlDoc.Load(defaultScorePath+"/scores.xml");
 	var x : XmlNodeList;
 	x = xmlDoc.GetElementsByTagName("Score");
 	var itemScore : XmlElement  = x.Item(x.Count-1);
 	itemScore.InnerText = ""+noOfCorrectAns;
-	xmlDoc.Save(Application.persistentDataPath+"/scores.xml");
+	xmlDoc.Save(defaultScorePath+"/scores.xml");
 	Application.LoadLevel("result");
 }
 function replay(){

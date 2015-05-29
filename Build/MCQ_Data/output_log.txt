@@ -6,41 +6,75 @@ Direct3D:
     Vendor:   Intel
     VRAM:     1052 MB
 Begin MonoManager ReloadAssembly
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
-Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.116 seconds
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.126 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\System.dll (this message is harmless)
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ\Build\MCQ_Data\Managed\Boo.Lang.dll (this message is harmless)
-NullReferenceException
-  at (wrapper managed-to-native) UnityEngine.Behaviour:get_enabled ()
-  at UnityEngine.EventSystems.UIBehaviour.IsActive () [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.Graphic.SetVerticesDirty () [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.Text.set_text (System.String value) [0x00000] in <filename unknown>:0 
-  at ChangeQuestion.setQuestion3 () [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.InvokableCall.Invoke (System.Object[] args) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.InvokableCallList.Invoke (System.Object[] parameters) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.UnityEventBase.Invoke (System.Object[] parameters) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.UnityEvent.Invoke () [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.Button.Press () [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerClickHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00000] in <filename unknown>:0 
-UnityEngine.Debug:Internal_LogException(Exception, Object)
-UnityEngine.Debug:LogException(Exception)
-UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1)
-UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData)
-UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent()
-UnityEngine.EventSystems.StandaloneInputModule:Process()
-UnityEngine.EventSystems.EventSystem:Update()
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityScript.Lang.dll (this message is harmless)
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Boo.Lang.dll (this message is harmless)
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.dll (this message is harmless)
+Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Xml.dll (this message is harmless)
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 14.223260 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 194.
+Total: 0.501714 ms (FindLiveObjects: 0.028815 ms CreateObjectMapping: 0.028815 ms MarkObjects: 0.422371 ms  DeleteObjects: 0.011447 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.130139 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 186.
+Total: 0.492240 ms (FindLiveObjects: 0.044605 ms CreateObjectMapping: 0.026842 ms MarkObjects: 0.409345 ms  DeleteObjects: 0.010657 ms)
+
+The referenced script on this Behaviour is missing!
  
-(Filename:  Line: -1)
+(Filename:  Line: 1713)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.134876 ms
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 219.
+Total: 0.543556 ms (FindLiveObjects: 0.045395 ms CreateObjectMapping: 0.022105 ms MarkObjects: 0.453950 ms  DeleteObjects: 0.020921 ms)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.503833 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 162.
+Total: 0.502503 ms (FindLiveObjects: 0.042237 ms CreateObjectMapping: 0.023289 ms MarkObjects: 0.399476 ms  DeleteObjects: 0.035921 ms)
 
