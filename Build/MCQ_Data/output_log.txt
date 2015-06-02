@@ -12,7 +12,7 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.126 seconds
+- Completed reload, in  0.128 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -23,26 +23,26 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.dll (this message is harmless)
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Xml.dll (this message is harmless)
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 14.223260 ms
+UnloadTime: 7.113646 ms
 
 Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 194.
-Total: 0.501714 ms (FindLiveObjects: 0.028815 ms CreateObjectMapping: 0.028815 ms MarkObjects: 0.422371 ms  DeleteObjects: 0.011447 ms)
+Total: 0.445269 ms (FindLiveObjects: 0.030000 ms CreateObjectMapping: 0.023684 ms MarkObjects: 0.377768 ms  DeleteObjects: 0.009868 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.130139 ms
+UnloadTime: 1.213831 ms
 
 Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 186.
-Total: 0.492240 ms (FindLiveObjects: 0.044605 ms CreateObjectMapping: 0.026842 ms MarkObjects: 0.409345 ms  DeleteObjects: 0.010657 ms)
+Total: 0.468558 ms (FindLiveObjects: 0.031579 ms CreateObjectMapping: 0.015394 ms MarkObjects: 0.408163 ms  DeleteObjects: 0.012237 ms)
 
 The referenced script on this Behaviour is missing!
  
 (Filename:  Line: 1713)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.134876 ms
+UnloadTime: 0.888169 ms
 
 Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 219.
-Total: 0.543556 ms (FindLiveObjects: 0.045395 ms CreateObjectMapping: 0.022105 ms MarkObjects: 0.453950 ms  DeleteObjects: 0.020921 ms)
+Total: 0.473295 ms (FindLiveObjects: 0.029210 ms CreateObjectMapping: 0.018158 ms MarkObjects: 0.407768 ms  DeleteObjects: 0.016579 ms)
 
 Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
  
@@ -73,8 +73,94 @@ Parent of RectTransform is being set with parent property. Consider using the Se
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.503833 ms
+UnloadTime: 1.633837 ms
 
 Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 162.
-Total: 0.502503 ms (FindLiveObjects: 0.042237 ms CreateObjectMapping: 0.023289 ms MarkObjects: 0.399476 ms  DeleteObjects: 0.035921 ms)
+Total: 0.416058 ms (FindLiveObjects: 0.026052 ms CreateObjectMapping: 0.016973 ms MarkObjects: 0.341451 ms  DeleteObjects: 0.030789 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.778431 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 186.
+Total: 0.627245 ms (FindLiveObjects: 0.039079 ms CreateObjectMapping: 0.019737 ms MarkObjects: 0.555796 ms  DeleteObjects: 0.011447 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.864090 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 194.
+Total: 1.143962 ms (FindLiveObjects: 0.102632 ms CreateObjectMapping: 0.037895 ms MarkObjects: 0.988039 ms  DeleteObjects: 0.012631 ms)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\user\AppData\LocalLow\Default\questions.xml".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x00000] in <filename unknown>:0 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.Xml.XmlTextWriter..ctor (System.String filename, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.Xml.XmlDocument.Save (System.String filename) [0x00000] in <filename unknown>:0 
+  at settings.save () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Events.InvokableCall.Invoke (System.Object[] args) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Events.InvokableCallList.Invoke (System.Object[] parameters) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Events.UnityEventBase.Invoke (System.Object[] parameters) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Events.UnityEvent.Invoke () [0x00000] in <filename unknown>:0 
+  at UnityEngine.UI.Button.Press () [0x00000] in <filename unknown>:0 
+  at UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) [0x00000] in <filename unknown>:0 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerClickHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00000] in <filename unknown>:0 
+UnityEngine.Debug:Internal_LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent()
+UnityEngine.EventSystems.StandaloneInputModule:Process()
+UnityEngine.EventSystems.EventSystem:Update()
+ 
+(Filename:  Line: -1)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.076856 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 186.
+Total: 0.659613 ms (FindLiveObjects: 0.044605 ms CreateObjectMapping: 0.020921 ms MarkObjects: 0.582639 ms  DeleteObjects: 0.009473 ms)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1713)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.630679 ms
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 219.
+Total: 0.525006 ms (FindLiveObjects: 0.033947 ms CreateObjectMapping: 0.017368 ms MarkObjects: 0.454348 ms  DeleteObjects: 0.018158 ms)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.182252 ms
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 162.
+Total: 0.483558 ms (FindLiveObjects: 0.032368 ms CreateObjectMapping: 0.017763 ms MarkObjects: 0.397505 ms  DeleteObjects: 0.034342 ms)
 

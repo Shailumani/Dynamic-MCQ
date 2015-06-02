@@ -17,6 +17,9 @@ function Start () {
 function quit(){
 	Application.Quit();
 }
+function createQuiz(){
+	Application.LoadLevel("createQuiz");
+}
 function readXML(filepath : String, result : Array, tagName : String){
     var xmlDoc : XmlDocument = new XmlDocument();
     if(File.Exists (filepath))
