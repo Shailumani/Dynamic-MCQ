@@ -58,7 +58,8 @@ function proceed(){
 	itemName.InnerText = userName;
 	itemScore.InnerText = "";
 	xmlDoc.Save(defaultScorePath+"/scores.xml");
-	Application.LoadLevel("question");
+	//Application.LoadLevel("question");
+	Application.LoadLevel("list");
 }
 function settings(){
 	Application.LoadLevel("settings");

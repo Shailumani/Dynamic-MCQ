@@ -23,17 +23,22 @@ var falseAnswers : Array;
 var trueAnswers : Array;
 var correctAnswers : Array;
 var changedAuto : boolean;
+var questionsFileNames : Array;
+var questionsFileName : String;
 function Start () {
 	defaultScorePath = Application.persistentDataPath;
 	var paths : Array = new Array();
+	questionsFileNames = new Array();
+	readXML(Application.persistentDataPath+"/temp.xml", questionsFileNames, "Name");
 	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
+	questionsFileName = questionsFileNames[0];
 	defaultPath = paths[0]; 
 	var i : int;
 	clickedButton=1;
 	questions = new Array();
 	correctAnswers = new Array();
-	readXML(defaultPath+"/questions.xml", questions, "Question");
-	readXML(defaultPath+"/questions.xml", correctAnswers, "Answer");
+	readXML(questionsFileName, questions, "Question");
+	readXML(questionsFileName, correctAnswers, "Answer");
 	for(i=0;i<correctAnswers.length;i++){
 		if(correctAnswers[i]=="1"){
 			correctAnswers[i] = true;

@@ -49,8 +49,10 @@
      <Compile Include="Assets\script\SelectQuestions.js" />
      <Compile Include="Assets\script\buttonEvent.js" />
      <Compile Include="Assets\script\createQuestionButtonEvent.js" />
+     <Compile Include="Assets\script\createTableRow.js" />
      <Compile Include="Assets\script\quizOn.js" />
      <Compile Include="Assets\script\quizOver.js" />
+     <Compile Include="Assets\script\readDirectory.js" />
      <Compile Include="Assets\script\settings.js" />
      <Compile Include="Assets\script\startQuiz.js" />
      <Compile Include="Assets\script\writeQuestion.js" />

@@ -108,7 +108,7 @@ function createFile(){
 		parentNode.AppendChild(answerNode);
 		answerNode.InnerText = correctAnswers[i] ? "1" : "0";
     }
-  	xmlDoc.Save(defaultPath+"/"+quizNames[0]+".xml");
+  	xmlDoc.Save(defaultPath+"/"+quizNames[0]+".qz");
 	Application.LoadLevel("start");
 }
 function submit(){
