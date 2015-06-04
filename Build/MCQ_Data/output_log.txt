@@ -14,7 +14,7 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.114 seconds
+- Completed reload, in  0.123 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -25,148 +25,74 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.dll (this message is harmless)
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Xml.dll (this message is harmless)
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 7.378521 ms
+UnloadTime: 7.281771 ms
 
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 246.
-Total: 0.466190 ms (FindLiveObjects: 0.033553 ms CreateObjectMapping: 0.020526 ms MarkObjects: 0.389610 ms  DeleteObjects: 0.018947 ms)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 5.152964 ms
-
-Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 226.
-Total: 0.738957 ms (FindLiveObjects: 0.065921 ms CreateObjectMapping: 0.020921 ms MarkObjects: 0.609481 ms  DeleteObjects: 0.041053 ms)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.547784 ms
-
-Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 168.
-Total: 0.788694 ms (FindLiveObjects: 0.096317 ms CreateObjectMapping: 0.030789 ms MarkObjects: 0.615008 ms  DeleteObjects: 0.043026 ms)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.896459 ms
-
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 201.
-Total: 0.817905 ms (FindLiveObjects: 0.063158 ms CreateObjectMapping: 0.027631 ms MarkObjects: 0.713299 ms  DeleteObjects: 0.011052 ms)
-
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.065409 ms
-
-Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 246.
-Total: 0.515533 ms (FindLiveObjects: 0.047763 ms CreateObjectMapping: 0.022500 ms MarkObjects: 0.424742 ms  DeleteObjects: 0.018947 ms)
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 247.
+Total: 0.534083 ms (FindLiveObjects: 0.040263 ms CreateObjectMapping: 0.034737 ms MarkObjects: 0.429082 ms  DeleteObjects: 0.017368 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.876091 ms
+UnloadTime: 3.328054 ms
 
-Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 226.
-Total: 0.556586 ms (FindLiveObjects: 0.049342 ms CreateObjectMapping: 0.018947 ms MarkObjects: 0.454743 ms  DeleteObjects: 0.032368 ms)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 236.
+Total: 0.662768 ms (FindLiveObjects: 0.058816 ms CreateObjectMapping: 0.030394 ms MarkObjects: 0.536451 ms  DeleteObjects: 0.035526 ms)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.203174 ms
+UnloadTime: 3.455555 ms
 
-Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 168.
-Total: 0.948565 ms (FindLiveObjects: 0.065132 ms CreateObjectMapping: 0.029605 ms MarkObjects: 0.774878 ms  DeleteObjects: 0.075001 ms)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.892512 ms
-
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 201.
-Total: 0.772905 ms (FindLiveObjects: 0.064342 ms CreateObjectMapping: 0.025263 ms MarkObjects: 0.670272 ms  DeleteObjects: 0.011052 ms)
-
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.956855 ms
-
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 350.
-Total: 0.655272 ms (FindLiveObjects: 0.037500 ms CreateObjectMapping: 0.020131 ms MarkObjects: 0.585402 ms  DeleteObjects: 0.010263 ms)
-
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.947263 ms
-
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 237.
-Total: 0.543954 ms (FindLiveObjects: 0.038684 ms CreateObjectMapping: 0.016184 ms MarkObjects: 0.477243 ms  DeleteObjects: 0.011052 ms)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 172.
+Total: 0.479609 ms (FindLiveObjects: 0.033947 ms CreateObjectMapping: 0.016579 ms MarkObjects: 0.388819 ms  DeleteObjects: 0.039079 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.040027 ms
+UnloadTime: 0.977771 ms
 
-Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 201.
-Total: 0.517507 ms (FindLiveObjects: 0.036316 ms CreateObjectMapping: 0.015394 ms MarkObjects: 0.433032 ms  DeleteObjects: 0.031579 ms)
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 202.
+Total: 0.725532 ms (FindLiveObjects: 0.092763 ms CreateObjectMapping: 0.027631 ms MarkObjects: 0.591320 ms  DeleteObjects: 0.011052 ms)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.841590 ms
+UnloadTime: 0.877507 ms
 
-Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 246.
-Total: 0.974618 ms (FindLiveObjects: 0.075790 ms CreateObjectMapping: 0.028421 ms MarkObjects: 0.845537 ms  DeleteObjects: 0.021710 ms)
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 247.
+Total: 0.491451 ms (FindLiveObjects: 0.038684 ms CreateObjectMapping: 0.018158 ms MarkObjects: 0.416056 ms  DeleteObjects: 0.017368 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 3.270044 ms
+UnloadTime: 3.028446 ms
 
-Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 226.
-Total: 0.585402 ms (FindLiveObjects: 0.052500 ms CreateObjectMapping: 0.018947 ms MarkObjects: 0.480006 ms  DeleteObjects: 0.032763 ms)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
-
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 236.
+Total: 0.575136 ms (FindLiveObjects: 0.060000 ms CreateObjectMapping: 0.028026 ms MarkObjects: 0.451977 ms  DeleteObjects: 0.033552 ms)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.169226 ms
+UnloadTime: 1.356327 ms
 
-Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 168.
-Total: 1.031066 ms (FindLiveObjects: 0.079343 ms CreateObjectMapping: 0.024868 ms MarkObjects: 0.830142 ms  DeleteObjects: 0.093948 ms)
+Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 172.
+Total: 0.482767 ms (FindLiveObjects: 0.035921 ms CreateObjectMapping: 0.017763 ms MarkObjects: 0.389213 ms  DeleteObjects: 0.037895 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.104093 ms
+UnloadTime: 0.713295 ms
 
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 201.
-Total: 0.539612 ms (FindLiveObjects: 0.038684 ms CreateObjectMapping: 0.018947 ms MarkObjects: 0.469743 ms  DeleteObjects: 0.011052 ms)
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 202.
+Total: 0.898428 ms (FindLiveObjects: 0.069869 ms CreateObjectMapping: 0.024868 ms MarkObjects: 0.787506 ms  DeleteObjects: 0.011842 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.092246 ms
+
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 247.
+Total: 0.497767 ms (FindLiveObjects: 0.036316 ms CreateObjectMapping: 0.019342 ms MarkObjects: 0.423950 ms  DeleteObjects: 0.016973 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.293563 ms
+
+Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 236.
+Total: 0.599610 ms (FindLiveObjects: 0.065132 ms CreateObjectMapping: 0.028026 ms MarkObjects: 0.472898 ms  DeleteObjects: 0.031973 ms)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.861327 ms
+UnloadTime: 1.721856 ms
 
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 200.
-Total: 0.520270 ms (FindLiveObjects: 0.034737 ms CreateObjectMapping: 0.020526 ms MarkObjects: 0.453558 ms  DeleteObjects: 0.009473 ms)
+Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 172.
+Total: 0.523030 ms (FindLiveObjects: 0.047763 ms CreateObjectMapping: 0.020526 ms MarkObjects: 0.406977 ms  DeleteObjects: 0.046184 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.061461 ms
+UnloadTime: 0.691190 ms
 
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 201.
-Total: 1.089883 ms (FindLiveObjects: 0.079737 ms CreateObjectMapping: 0.030000 ms MarkObjects: 0.949354 ms  DeleteObjects: 0.028026 ms)
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 202.
+Total: 1.133693 ms (FindLiveObjects: 0.057237 ms CreateObjectMapping: 0.028421 ms MarkObjects: 1.035008 ms  DeleteObjects: 0.011447 ms)
 

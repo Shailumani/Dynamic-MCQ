@@ -5,7 +5,11 @@ var defaultPath : String;
 var defaultScorePath : String;
 var pos: Vector3;
 var rot : Quaternion;
+var selectedAnswers : Array;
+var prefabOption : GameObject;
 var prefabButton : GameObject;
+var optionsPanel : GameObject;
+var optionsScrollRect : GameObject;
 var newButtonText : UI.Text;
 var newButton : UI.Button;
 var questions : Array;
@@ -25,7 +29,12 @@ var correctAnswers : Array;
 var changedAuto : boolean;
 var questionsFileNames : Array;
 var questionsFileName : String;
+var options : Array;
+var previousToggles : Array;
 function Start () {
+	var optionsLayout : UI.GridLayoutGroup = optionsPanel.GetComponent(UI.GridLayoutGroup);
+	optionsLayout.cellSize.Set(optionsScrollRect.GetComponent(RectTransform).rect.width, 100);
+	previousToggles = new Array();
 	defaultScorePath = Application.persistentDataPath;
 	var paths : Array = new Array();
 	questionsFileNames = new Array();
@@ -37,16 +46,19 @@ function Start () {
 	clickedButton=1;
 	questions = new Array();
 	correctAnswers = new Array();
+	selectedAnswers = new Array();
+	options = new Array();
 	readXML(questionsFileName, questions, "Question");
+	readOptions(questionsFileName, options);
 	readXML(questionsFileName, correctAnswers, "Answer");
-	for(i=0;i<correctAnswers.length;i++){
+	/*for(i=0;i<correctAnswers.length;i++){
 		if(correctAnswers[i]=="1"){
 			correctAnswers[i] = true;
 		}
 		else{
 			correctAnswers[i] = false;
 		}
-	}
+	}*/
 	var xMin = -Screen.width/2;
 	var xMax = Screen.width/2;
 	var y = Screen.height - 20;
@@ -58,6 +70,7 @@ function Start () {
 	for(i=0;i<questions.length;i++){
 		falseAnswers.push(false);
 		trueAnswers.push(false);
+		selectedAnswers.push(0);
 	}
 	changedAuto=true;
 	var buttonWidth = (xMax-xMin)/questions.length;
@@ -65,7 +78,7 @@ function Start () {
 		pos = Vector3((buttonWidth/2)+i*buttonWidth,y,0);
 		rot =  Quaternion.identity;
 		newButton = Instantiate(prefabButton, pos, rot).GetComponent(UI.Button);
-		newButton.transform.parent = gameObject.transform;
+		newButton.transform.SetParent(transform);
 		var newRect = newButton.GetComponent(RectTransform);
 		newRect.sizeDelta = new Vector2(buttonWidth, 30);
 		newButton.name = ""+(i+1);
@@ -77,20 +90,32 @@ function Start () {
 		questionBox.text="Q"+clickedButton+" : "+questions[clickedButton-1];
 	}
 	checkBoxes = GetComponentsInChildren(UI.Toggle);
-	trueBox = checkBoxes[0].GetComponent(UI.Toggle);
-	falseBox = checkBoxes[1].GetComponent(UI.Toggle);
-	trueBox.isOn=false;
-	falseBox.isOn=false;
+	//trueBox = checkBoxes[0].GetComponent(UI.Toggle);
+	//falseBox = checkBoxes[1].GetComponent(UI.Toggle);
+	//trueBox.isOn=false;
+	//falseBox.isOn=false;
 	changedAuto=false;
 	buttons = GetComponentsInChildren(UI.Button);
-	buttons[1+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;	
+	buttons[1+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;
+	changeUI(1);	
 }
 function Update () {
 
 }
 function submit(){
+	checkBoxes = optionsPanel.GetComponentsInChildren(UI.Toggle);
+	for(var boxNo=1;boxNo<=checkBoxes.length;boxNo++){
+		if(checkBoxes[boxNo-1].GetComponent(UI.Toggle).isOn){
+			selectedAnswers[clickedButton-1] = boxNo;
+			break;
+		}
+	}
+	
 	for(var i=0;i<questions.length;i++){
-		if((correctAnswers[i] && trueAnswers[i]) || (!correctAnswers[i] && falseAnswers[i])){
+//		if((correctAnswers[i] && trueAnswers[i]) || (!correctAnswers[i] && falseAnswers[i])){
+//			noOfCorrectAns+=1;
+//		}
+		if(correctAnswers[i]==selectedAnswers[i].ToString()){
 			noOfCorrectAns+=1;
 		}
 	}
@@ -119,6 +144,26 @@ function readXML(filepath : String, result : Array, tagName : String){
   		}
 	}
 }
+function readOptions(filepath : String, result : Array){
+	var xmlDoc : XmlDocument = new XmlDocument();
+	var optionsSet : Array;
+	if(File.Exists(filepath)){
+		var x : XmlNodeList;
+		xmlDoc.Load(filepath);
+		x = xmlDoc.GetElementsByTagName("Set");
+		for(var i=0;i<x.Count;i++){
+			var innerXmlDoc : XmlDocument = new XmlDocument();
+			innerXmlDoc.LoadXml(x.Item(i).OuterXml);
+			var y : XmlNodeList;
+			y = innerXmlDoc.GetElementsByTagName("Option");
+			optionsSet = new Array();
+			for(var j=0;j<y.Count;j++){
+				optionsSet.push(y.Item(j).InnerText);
+			}
+			result.push(optionsSet);
+		}
+	}
+}
 function setQuestion(questionNo : int){
 	questionBox.text="Q"+questionNo+" : "+questions[questionNo-1];
 	clickedButton=questionNo;
@@ -132,6 +177,13 @@ function changeQuestion(changeAmount : int){
 }
 function changeUI(questionNumber : int){
 	changedAuto=true;
+	checkBoxes = optionsPanel.GetComponentsInChildren(UI.Toggle);
+	for(var boxNo=1;boxNo<=checkBoxes.length;boxNo++){
+		if(checkBoxes[boxNo-1].GetComponent(UI.Toggle).isOn){
+			selectedAnswers[clickedButton-1] = boxNo;
+			break;
+		}
+	}
 	lastButton=buttons[offsetButton + clickedButton].GetComponent(UI.Button);
 	lastButton.colors.normalColor=Color.grey;
 	if(questionNumber>=1){
@@ -149,7 +201,8 @@ function changeUI(questionNumber : int){
 	}
 	buttons[clickedButton+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;
 	buttons[clickedButton+offsetButton].GetComponent(UI.Button).colors.highlightedColor=Color.cyan;
-	if(trueAnswers[clickedButton-1]){
+	updateOptions(options[clickedButton-1]);
+/*	if(trueAnswers[clickedButton-1]){
 		trueBox.isOn=true;
 		falseBox.isOn=false;
 	}
@@ -161,8 +214,32 @@ function changeUI(questionNumber : int){
 		trueBox.isOn=false;
 		falseBox.isOn=false;
 	}
-	changedAuto=false;
-	
+*/
+	changedAuto=false;	
+}
+function updateOptions(optionsSet : Array){
+	checkBoxes = optionsPanel.GetComponentsInChildren(UI.Toggle);
+	var diffOfToggles : int;
+	var cnt = 0;
+	while(previousToggles.length>0){
+		Destroy(previousToggles.pop());
+	}
+	diffOfToggles = optionsSet.length;
+	while(diffOfToggles>0){
+		var newCheckBox : GameObject;
+		//prefabOption.GetComponent(RectTransform).sizeDelta = new Vector2(400, 100);
+		newCheckBox = Instantiate(prefabOption);
+		newCheckBox.transform.SetParent(optionsPanel.transform);
+		
+		newCheckBox.transform.localScale = new Vector3(1,1,1);
+		previousToggles.push(newCheckBox);
+		newCheckBox.GetComponentsInChildren(UI.Text)[0].GetComponent(UI.Text).text = optionsSet[optionsSet.length-diffOfToggles];
+		diffOfToggles-=1;
+		if(selectedAnswers[clickedButton-1]==optionsSet.length-diffOfToggles){
+			newCheckBox.GetComponent(UI.Toggle).isOn = true;
+		}
+		newCheckBox.name = "Option"+(optionsSet.length-diffOfToggles);
+	}
 }
 function toggleTrue(){
 	if(changedAuto){

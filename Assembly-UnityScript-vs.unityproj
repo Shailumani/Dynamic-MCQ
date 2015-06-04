@@ -55,6 +55,7 @@
      <Compile Include="Assets\script\readDirectory.js" />
      <Compile Include="Assets\script\settings.js" />
      <Compile Include="Assets\script\startQuiz.js" />
+     <Compile Include="Assets\script\toggleEvent.js" />
      <Compile Include="Assets\script\writeQuestion.js" />
      <None Include="Assets\questions.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
