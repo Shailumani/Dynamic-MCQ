@@ -5,6 +5,7 @@ var defaultPath : String;
 var pos: Vector3;
 var rot : Quaternion;
 var prefabButton : GameObject;
+var prefabOptionCreate : GameObject;
 var newButtonText : UI.Text;
 var newButton : UI.Button;
 var questions : Array;
@@ -12,17 +13,26 @@ var questionBox : UI.InputField;
 var textComponents : Component[];
 var buttons : Component[];
 var checkBoxes : Component[];
+var optionTexts : Component[];
 var clickedButton:int;
-var trueBox : UI.Toggle;
-var falseBox : UI.Toggle;
+var selectedAnswers : Array;
+var previousToggles : Array;
+var options : Array;
+//var trueBox : UI.Toggle;
+//var falseBox : UI.Toggle;
 var lastButton: UI.Button;
 var offsetButton : int;
-var falseAnswers : Array;
-var trueAnswers : Array;
+//var falseAnswers : Array;
+//var trueAnswers : Array;
+var autoIncrement : int;
 var correctAnswers : Array;
 var changedAuto : boolean;
 var noOfQuestions : int;
+var noOfOptions : Array;
 function Start () {
+	autoIncrement = 0;
+	previousToggles = new Array();
+	noOfOptions = new Array();
 	var paths : Array = new Array();
 	var noOfQuestionsArray = new Array();
 	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
@@ -35,14 +45,23 @@ function Start () {
 	var xMin = -Screen.width/2;
 	var xMax = Screen.width/2;
 	var y = Screen.height - 20;
-	offsetButton = 3;
+	offsetButton = 4;
 	changedAuto = false;
-	falseAnswers=new Array();
-	trueAnswers=new Array();
+	selectedAnswers = new Array();
+	options = new Array();
+	//falseAnswers=new Array();
+	//trueAnswers=new Array();
 	for(i=0;i<noOfQuestions;i++){
 		questions.push("");
-		falseAnswers.push(false);
-		trueAnswers.push(true);
+		var newOptions = new Array();
+		selectedAnswers.push(0);
+		//noOfOptions.push(2);
+		for(var j=0;j<2;j++){
+			newOptions.push("");
+		}
+		options.push(newOptions);
+		//falseAnswers.push(false);
+		//trueAnswers.push(true);
 	}
 	changedAuto=true;
 	var buttonWidth = (xMax-xMin)/questions.length;
@@ -59,16 +78,27 @@ function Start () {
 	}
 	questionBox=GetComponentInChildren(UI.InputField);
 	checkBoxes = GetComponentsInChildren(UI.Toggle);
-	trueBox = checkBoxes[0].GetComponent(UI.Toggle);
-	falseBox = checkBoxes[1].GetComponent(UI.Toggle);
-	trueBox.isOn=true;
-	falseBox.isOn=false;
+	//trueBox = checkBoxes[0].GetComponent(UI.Toggle);
+	//falseBox = checkBoxes[1].GetComponent(UI.Toggle);
+	//trueBox.isOn=true;
+	//falseBox.isOn=false;
 	changedAuto=false;
 	buttons = GetComponentsInChildren(UI.Button);
-	buttons[1+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;	
+	buttons[1+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;
+	changeUI(1);	
 }
 function Update () {
 
+}
+
+function addOption(){
+	var newOptionCreate : GameObject;
+	newOptionCreate = Instantiate(prefabOptionCreate);
+	newOptionCreate.transform.SetParent(GameObject.Find("Options").transform);
+	newOptionCreate.transform.localScale = new Vector3(1,1,1);
+	previousToggles.push(newOptionCreate);
+	newOptionCreate.name = "OptionCreate"+autoIncrement;
+	autoIncrement++;
 }
 function createFile(){
 	var categories = new Array();
@@ -104,25 +134,60 @@ function createFile(){
 		var questionNode : XmlElement = xmlDoc.CreateElement("Question");
 		parentNode.AppendChild(questionNode);
 		questionNode.InnerText = questions[i];
+		var myOptions : Array;
+		myOptions = new Array();
+		myOptions = options[i];
+		for(var j=0;j<myOptions.length;j++){	
+			var optionNode : XmlElement = xmlDoc.CreateElement("Option");
+			parentNode.AppendChild(optionNode);
+			optionNode.InnerText = myOptions[j];
+		}
 		var answerNode : XmlElement = xmlDoc.CreateElement("Answer");
 		parentNode.AppendChild(answerNode);
-		answerNode.InnerText = correctAnswers[i] ? "1" : "0";
+		answerNode.InnerText = correctAnswers[i].ToString();
     }
   	xmlDoc.Save(defaultPath+"/"+quizNames[0]+".qz");
 	Application.LoadLevel("start");
 }
 function submit(){
+	checkBoxes = GetComponentsInChildren(UI.Toggle);
+	//print(checkBoxes.Length);
+	//print(clickedButton-1);
+	optionTexts = GameObject.Find("Options").GetComponentsInChildren(UI.InputField);
+	var newOptions = new Array();
+	//noOfOptions[clickedButton-1] = checkBoxes.Length;
+	for(var i = 0;i<checkBoxes.Length;i++){
+		newOptions.push(optionTexts[i].GetComponent(UI.InputField).text);
+		if(checkBoxes[i].GetComponent(UI.Toggle).isOn){
+			selectedAnswers[clickedButton-1] = i+1;
+		}
+	}
+	while(newOptions.length<2){
+		newOptions.push("");
+	}
+	options[clickedButton-1] = newOptions;
 	correctAnswers = new Array();
-	for(var i=0;i<questions.length;i++){
+	for(i=0;i<questions.length;i++){
 		if(questions[i]==""){
 			return;
 		}
-		if(trueAnswers[i]){
+		if(int.Parse(selectedAnswers[i].ToString())==0){
+			return;
+		}
+		var myOptions = new Array();
+		myOptions = options[i];
+		for(var j=0;j<myOptions.length;j++){
+			if(myOptions[j]==""){
+				return;
+			}
+		}
+		/*if(trueAnswers[i]){
 			correctAnswers.push(true);
 		}
 		else{
 			correctAnswers.push(false);
-		}
+		}*/
+		correctAnswers.push(selectedAnswers[i]);
 	}
 	createFile();
 }
@@ -159,6 +224,22 @@ function changeQuestion(changeAmount : int){
 }
 function changeUI(questionNumber : int){
 	changedAuto=true;
+	checkBoxes = GetComponentsInChildren(UI.Toggle);
+	//print(checkBoxes.Length);
+	//print(clickedButton-1);
+	optionTexts = GameObject.Find("Options").GetComponentsInChildren(UI.InputField);
+	var newOptions = new Array();
+	//noOfOptions[clickedButton-1] = checkBoxes.Length;
+	for(var i = 0;i<checkBoxes.Length;i++){
+		newOptions.push(optionTexts[i].GetComponent(UI.InputField).text);
+		if(checkBoxes[i].GetComponent(UI.Toggle).isOn){
+			selectedAnswers[clickedButton-1] = i+1;
+		}
+	}
+	while(newOptions.length<2){
+		newOptions.push("");
+	}
+	options[clickedButton-1] = newOptions;
 	questions[clickedButton-1] = questionBox.text;
 	lastButton=buttons[offsetButton + clickedButton].GetComponent(UI.Button);
 	lastButton.colors.normalColor=Color.grey;
@@ -177,7 +258,8 @@ function changeUI(questionNumber : int){
 	}
 	buttons[clickedButton+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;
 	buttons[clickedButton+offsetButton].GetComponent(UI.Button).colors.highlightedColor=Color.cyan;
-	if(trueAnswers[clickedButton-1]){
+	updateOptions(options[clickedButton-1]);
+/*	if(trueAnswers[clickedButton-1]){
 		trueBox.isOn=true;
 		falseBox.isOn=false;
 	}
@@ -185,10 +267,30 @@ function changeUI(questionNumber : int){
 		falseBox.isOn=true;
 		trueBox.isOn=false;
 	}
-	changedAuto=false;
-	
+	changedAuto=false;*/	
 }
-function toggleTrue(){
+
+function updateOptions(myOptions : Array){
+	while(previousToggles.length>0){
+		Destroy(previousToggles.pop());
+	}
+	previousToggles = new Array();
+	autoIncrement = 1;
+	for(var i=0;i<myOptions.length;i++){
+		var newOption : GameObject;
+		newOption = Instantiate(prefabOptionCreate);
+		newOption.transform.SetParent(GameObject.Find("Options").transform);
+		newOption.transform.localScale = new Vector3(1,1,1);
+		newOption.name = "OptionCreate"+autoIncrement;
+		if(selectedAnswers[clickedButton-1]==(i+1)){
+			newOption.GetComponentInChildren(UI.Toggle).isOn = true;
+		}
+		previousToggles.push(newOption);
+		newOption.GetComponentInChildren(UI.InputField).text = myOptions[i];
+		autoIncrement++;
+	}
+}
+/*function toggleTrue(){
 	if(changedAuto){
 		return;
 	}
@@ -207,4 +309,4 @@ function toggleFalse(){
 	trueBox.isOn=!falseBox.isOn;
 	trueAnswers[clickedButton-1]=trueBox.isOn;
 	changedAuto=false;
-}
+}*/
