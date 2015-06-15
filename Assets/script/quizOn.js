@@ -233,14 +233,14 @@ function updateOptions(optionsSet : Array){
 		
 		newCheckBox.transform.localScale = new Vector3(1,1,1);
 		previousToggles.push(newCheckBox);
-		newCheckBox.GetComponentsInChildren(UI.Text)[0].GetComponent(UI.Text).text = optionsSet[optionsSet.length-diffOfToggles];
+		newCheckBox.GetComponentsInChildren(UI.Text)[0].GetComponent(UI.Text).text = (optionsSet.length-diffOfToggles+1)+". "+optionsSet[optionsSet.length-diffOfToggles];
 		diffOfToggles-=1;
 		if(selectedAnswers[clickedButton-1]==optionsSet.length-diffOfToggles){
 			newCheckBox.GetComponent(UI.Toggle).isOn = true;
 		}
 		newCheckBox.name = "Option"+(optionsSet.length-diffOfToggles);
 	}
-}
+}/*
 function toggleTrue(){
 	if(changedAuto){
 		return;
@@ -264,4 +264,4 @@ function toggleFalse(){
 		trueAnswers[clickedButton-1]=false;
 	}
 	changedAuto=false;
-}
+}*/

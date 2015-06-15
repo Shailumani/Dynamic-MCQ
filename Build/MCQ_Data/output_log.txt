@@ -14,7 +14,7 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.146 seconds
+- Completed reload, in  0.121 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -24,41 +24,17 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Boo.Lang.dll (this message is harmless)
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.dll (this message is harmless)
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Xml.dll (this message is harmless)
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 8.089031 ms
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 12.114951 ms
 
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 248.
-Total: 0.620138 ms (FindLiveObjects: 0.047763 ms CreateObjectMapping: 0.033552 ms MarkObjects: 0.493031 ms  DeleteObjects: 0.027237 ms)
-
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.241491 ms
-
-Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 237.
-Total: 0.658427 ms (FindLiveObjects: 0.066316 ms CreateObjectMapping: 0.028421 ms MarkObjects: 0.519873 ms  DeleteObjects: 0.042632 ms)
-
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 5.518478 ms
-
-Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 173.
-Total: 0.630796 ms (FindLiveObjects: 0.063553 ms CreateObjectMapping: 0.031579 ms MarkObjects: 0.481189 ms  DeleteObjects: 0.052105 ms)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.179091 ms
-
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 203.
-Total: 0.517505 ms (FindLiveObjects: 0.042632 ms CreateObjectMapping: 0.018947 ms MarkObjects: 0.442109 ms  DeleteObjects: 0.012236 ms)
-
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.057116 ms
-
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 352.
-Total: 0.700665 ms (FindLiveObjects: 0.046184 ms CreateObjectMapping: 0.020131 ms MarkObjects: 0.623295 ms  DeleteObjects: 0.010263 ms)
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 352.
+Total: 0.684083 ms (FindLiveObjects: 0.045789 ms CreateObjectMapping: 0.030789 ms MarkObjects: 0.591714 ms  DeleteObjects: 0.011842 ms)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 3.454378 ms
+UnloadTime: 2.389358 ms
 
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 276.
-Total: 0.724349 ms (FindLiveObjects: 0.074606 ms CreateObjectMapping: 0.027631 ms MarkObjects: 0.605532 ms  DeleteObjects: 0.013815 ms)
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 280.
+Total: 0.571582 ms (FindLiveObjects: 0.043026 ms CreateObjectMapping: 0.025263 ms MarkObjects: 0.490661 ms  DeleteObjects: 0.011052 ms)
 
 Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
  
@@ -68,50 +44,45 @@ Parent of RectTransform is being set with parent property. Consider using the Se
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
 
-ArgumentOutOfRangeException: Argument is out of range.
-Parameter name: index
-  at System.Collections.Generic.List`1[UnityEngine.UICharInfo].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.InputField.SetDrawRangeToContainCaretPosition (UnityEngine.TextGenerator gen, Int32 caretPos, System.Int32& drawStart, System.Int32& drawEnd) [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.InputField.UpdateLabel () [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.InputField.OnUpdateSelected (UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute (IUpdateSelectedHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute[IUpdateSelectedHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00000] in <filename unknown>:0 
-UnityEngine.Debug:Internal_LogException(Exception, Object)
-UnityEngine.Debug:LogException(Exception)
-UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1)
-UnityEngine.EventSystems.StandaloneInputModule:SendUpdateEventToSelectedObject()
-UnityEngine.EventSystems.StandaloneInputModule:Process()
-UnityEngine.EventSystems.EventSystem:Update()
- 
-(Filename:  Line: -1)
-
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.077521 ms
+UnloadTime: 3.902789 ms
 
-Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 206.
-Total: 0.711717 ms (FindLiveObjects: 0.057237 ms CreateObjectMapping: 0.022894 ms MarkObjects: 0.568821 ms  DeleteObjects: 0.060395 ms)
+Unloading 59 unused Assets to reduce memory usage. Loaded Objects now: 206.
+Total: 0.551451 ms (FindLiveObjects: 0.042237 ms CreateObjectMapping: 0.020526 ms MarkObjects: 0.446055 ms  DeleteObjects: 0.042237 ms)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.131995 ms
+UnloadTime: 0.905532 ms
 
 Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 248.
-Total: 0.760665 ms (FindLiveObjects: 0.063158 ms CreateObjectMapping: 0.040263 ms MarkObjects: 0.628822 ms  DeleteObjects: 0.025658 ms)
+Total: 0.470924 ms (FindLiveObjects: 0.028026 ms CreateObjectMapping: 0.019736 ms MarkObjects: 0.405002 ms  DeleteObjects: 0.016973 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.352808 ms
+UnloadTime: 2.404358 ms
 
 Unloading 49 unused Assets to reduce memory usage. Loaded Objects now: 237.
-Total: 0.694744 ms (FindLiveObjects: 0.054474 ms CreateObjectMapping: 0.033947 ms MarkObjects: 0.572374 ms  DeleteObjects: 0.032368 ms)
+Total: 0.585793 ms (FindLiveObjects: 0.048552 ms CreateObjectMapping: 0.024868 ms MarkObjects: 0.481187 ms  DeleteObjects: 0.030000 ms)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.902256 ms
+UnloadTime: 1.341324 ms
 
 Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 173.
-Total: 0.524610 ms (FindLiveObjects: 0.038289 ms CreateObjectMapping: 0.017368 ms MarkObjects: 0.425925 ms  DeleteObjects: 0.041053 ms)
+Total: 0.479608 ms (FindLiveObjects: 0.027237 ms CreateObjectMapping: 0.019342 ms MarkObjects: 0.395134 ms  DeleteObjects: 0.036710 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.514226 ms
+UnloadTime: 0.732636 ms
 
 Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 203.
-Total: 0.557768 ms (FindLiveObjects: 0.058421 ms CreateObjectMapping: 0.020131 ms MarkObjects: 0.467768 ms  DeleteObjects: 0.010658 ms)
+Total: 0.596056 ms (FindLiveObjects: 0.029605 ms CreateObjectMapping: 0.017368 ms MarkObjects: 0.536451 ms  DeleteObjects: 0.011052 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.108428 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 202.
+Total: 0.485924 ms (FindLiveObjects: 0.026447 ms CreateObjectMapping: 0.016973 ms MarkObjects: 0.432634 ms  DeleteObjects: 0.009473 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.901979 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 203.
+Total: 0.534872 ms (FindLiveObjects: 0.034737 ms CreateObjectMapping: 0.017763 ms MarkObjects: 0.472503 ms  DeleteObjects: 0.009079 ms)
 

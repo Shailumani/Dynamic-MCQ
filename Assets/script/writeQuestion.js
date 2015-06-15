@@ -1,23 +1,30 @@
 ﻿#pragma strict
+/*
+ * Script to handle the scene where questions are written for creation of quiz.
+ */
 import System.IO;
 import System.Xml;
-var defaultPath : String;
-var pos: Vector3;
-var rot : Quaternion;
-var prefabButton : GameObject;
-var prefabOptionCreate : GameObject;
-var newButtonText : UI.Text;
-var newButton : UI.Button;
-var questions : Array;
-var questionBox : UI.InputField;
-var textComponents : Component[];
-var buttons : Component[];
-var checkBoxes : Component[];
-var optionTexts : Component[];
+var TYPE_TEXT :  int = 0;
+var TYPE_IMAGE_DESCRIPTION :  int = 1;
+var TYPE_IMAGE_OPTIONS :  int = 2;
+var defaultPath : String;	//Default Path set by the user
+var pos: Vector3;	//position vector
+var rot : Quaternion;	//rotation of dynamically created objects
+var prefabButton : GameObject;	//prefab of Button which is to be created dynamically
+var prefabOptionCreate : GameObject;	//prefab of an option to be created dynamically
+var newButtonText : UI.Text;	//text field of a dynamically created button
+var newButton : UI.Button;	//the dynamically created button
+var questions : Array;	//the array where all questions provided by author will be stored
+var questionBox : UI.InputField;	//the inputField where user enters the questions
+var textComponents : Component[];	//Array to store all the text components
+var buttons : Component[];	//Array to store all the buttons
+var checkBoxes : Component[];	//Array to store all the checkboxes
+var optionTexts : Component[];	//Array to store the options
 var clickedButton:int;
 var selectedAnswers : Array;
 var previousToggles : Array;
 var options : Array;
+var questionTypes : Array;
 //var trueBox : UI.Toggle;
 //var falseBox : UI.Toggle;
 var lastButton: UI.Button;
@@ -30,6 +37,7 @@ var changedAuto : boolean;
 var noOfQuestions : int;
 var noOfOptions : Array;
 function Start () {
+	questionTypes = new Array();
 	autoIncrement = 0;
 	previousToggles = new Array();
 	noOfOptions = new Array();
@@ -45,7 +53,7 @@ function Start () {
 	var xMin = -Screen.width/2;
 	var xMax = Screen.width/2;
 	var y = Screen.height - 20;
-	offsetButton = 4;
+	offsetButton = 5;
 	changedAuto = false;
 	selectedAnswers = new Array();
 	options = new Array();
@@ -60,6 +68,7 @@ function Start () {
 			newOptions.push("");
 		}
 		options.push(newOptions);
+		questionTypes.push(TYPE_TEXT);
 		//falseAnswers.push(false);
 		//trueAnswers.push(true);
 	}
@@ -98,6 +107,7 @@ function addOption(){
 	newOptionCreate.transform.localScale = new Vector3(1,1,1);
 	previousToggles.push(newOptionCreate);
 	newOptionCreate.name = "OptionCreate"+autoIncrement;
+	newOptionCreate.GetComponentInChildren(UI.Text).text = autoIncrement.ToString();
 	autoIncrement++;
 }
 function createFile(){
@@ -156,6 +166,7 @@ function submit(){
 	optionTexts = GameObject.Find("Options").GetComponentsInChildren(UI.InputField);
 	var newOptions = new Array();
 	//noOfOptions[clickedButton-1] = checkBoxes.Length;
+	selectedAnswers[clickedButton - 1] = 0;
 	for(var i = 0;i<checkBoxes.Length;i++){
 		newOptions.push(optionTexts[i].GetComponent(UI.InputField).text);
 		if(checkBoxes[i].GetComponent(UI.Toggle).isOn){
@@ -229,6 +240,7 @@ function changeUI(questionNumber : int){
 	//print(clickedButton-1);
 	optionTexts = GameObject.Find("Options").GetComponentsInChildren(UI.InputField);
 	var newOptions = new Array();
+	selectedAnswers[clickedButton - 1] = 0;
 	//noOfOptions[clickedButton-1] = checkBoxes.Length;
 	for(var i = 0;i<checkBoxes.Length;i++){
 		newOptions.push(optionTexts[i].GetComponent(UI.InputField).text);
@@ -287,8 +299,21 @@ function updateOptions(myOptions : Array){
 		}
 		previousToggles.push(newOption);
 		newOption.GetComponentInChildren(UI.InputField).text = myOptions[i];
+		newOption.GetComponentInChildren(UI.Text).text = autoIncrement.ToString(); 
 		autoIncrement++;
 	}
+}
+function switchType(){
+	if(int.Parse(questionTypes[clickedButton-1].ToString())==TYPE_TEXT){
+		GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to text question";
+		switchToImage();
+	}else{
+		GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to image question";
+		questionTypes[clickedButton-1] = TYPE_TEXT;
+	}
+}
+function switchToImage(){
+	questionTypes[clickedButton-1] = TYPE_IMAGE_DESCRIPTION;
 }
 /*function toggleTrue(){
 	if(changedAuto){

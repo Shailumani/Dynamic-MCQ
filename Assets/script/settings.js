@@ -68,9 +68,14 @@ function save(){
 	        var questionNode : XmlElement = xmlDoc.CreateElement("Question");
 	        parentNode.AppendChild(questionNode);
 	        questionNode.InnerText = "This is a sample question";
+		    for(i=0;i<4;i++){
+		    	var optionNode : XmlElement = xmlDoc.CreateElement("Option");
+	        	parentNode.AppendChild(optionNode);
+	        	optionNode.InnerText = "This is option no. "+(i+1);
+		    }
 		    var answerNode : XmlElement = xmlDoc.CreateElement("Answer");
 	        parentNode.AppendChild(answerNode);
-	        answerNode.InnerText = "1";
+	        answerNode.InnerText = "2";
 	      	xmlDoc.Save(pathBox.text+"/questions.qz");
 		}
 		xmlDoc = new XmlDocument();
