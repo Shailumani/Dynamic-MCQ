@@ -1,12 +1,16 @@
 ﻿#pragma strict
 import System.IO;
 import System.Xml;
+var TYPE_TEXT :  int = 0;
+var TYPE_IMAGE_DESCRIPTION :  int = 1;
+var TYPE_IMAGE_OPTIONS :  int = 2;
 var defaultPath : String;
 var defaultScorePath : String;
 var pos: Vector3;
 var rot : Quaternion;
 var selectedAnswers : Array;
-var prefabOption : GameObject;
+var prefabOptionText : GameObject;
+var prefabOptionImage : GameObject;
 var prefabButton : GameObject;
 var optionsPanel : GameObject;
 var optionsScrollRect : GameObject;
@@ -30,6 +34,7 @@ var changedAuto : boolean;
 var questionsFileNames : Array;
 var questionsFileName : String;
 var options : Array;
+var optionsTypes : Array;
 var previousToggles : Array;
 function Start () {
 	var optionsLayout : UI.GridLayoutGroup = optionsPanel.GetComponent(UI.GridLayoutGroup);
@@ -48,8 +53,9 @@ function Start () {
 	correctAnswers = new Array();
 	selectedAnswers = new Array();
 	options = new Array();
+	optionsTypes = new Array();
 	readXML(questionsFileName, questions, "Question");
-	readOptions(questionsFileName, options);
+	readOptions(questionsFileName, options, optionsTypes);
 	readXML(questionsFileName, correctAnswers, "Answer");
 	/*for(i=0;i<correctAnswers.length;i++){
 		if(correctAnswers[i]=="1"){
@@ -144,9 +150,10 @@ function readXML(filepath : String, result : Array, tagName : String){
   		}
 	}
 }
-function readOptions(filepath : String, result : Array){
+function readOptions(filepath : String, result : Array, resultType : Array){
 	var xmlDoc : XmlDocument = new XmlDocument();
 	var optionsSet : Array;
+	var optionsTypeSet : Array;
 	if(File.Exists(filepath)){
 		var x : XmlNodeList;
 		xmlDoc.Load(filepath);
@@ -155,15 +162,31 @@ function readOptions(filepath : String, result : Array){
 			var innerXmlDoc : XmlDocument = new XmlDocument();
 			innerXmlDoc.LoadXml(x.Item(i).OuterXml);
 			var y : XmlNodeList;
-			y = innerXmlDoc.GetElementsByTagName("Option");
+			y = innerXmlDoc.GetElementsByTagName("Value");
+			var z : XmlNodeList;
+			z = innerXmlDoc.GetElementsByTagName("Type");
 			optionsSet = new Array();
+			optionsTypeSet = new Array();
 			for(var j=0;j<y.Count;j++){
-				optionsSet.push(y.Item(j).InnerText);
+				optionsTypeSet.push(z.Item(j).InnerText);
+				if(parseInt(z.Item(j).InnerText.ToString())==TYPE_TEXT)
+					optionsSet.push(y.Item(j).InnerText);
+				else
+					optionsSet.push(stringToSprite(y.Item(j).InnerText));
 			}
+			resultType.push(optionsTypeSet);
 			result.push(optionsSet);
 		}
 	}
 }
+
+function stringToSprite(byte64String : String){
+	var bytes : byte[] = System.Convert.FromBase64String(byte64String);
+ 	var tex : Texture2D = new Texture2D(100,100);
+ 	tex.LoadImage(bytes);
+ 	return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.0f));
+}
+
 function setQuestion(questionNo : int){
 	questionBox.text="Q"+questionNo+" : "+questions[questionNo-1];
 	clickedButton=questionNo;
@@ -221,19 +244,28 @@ function updateOptions(optionsSet : Array){
 	checkBoxes = optionsPanel.GetComponentsInChildren(UI.Toggle);
 	var diffOfToggles : int;
 	var cnt = 0;
+	var myOptionsTypes : Array;
+	myOptionsTypes = optionsTypes[clickedButton-1];
 	while(previousToggles.length>0){
 		Destroy(previousToggles.pop());
 	}
 	diffOfToggles = optionsSet.length;
 	while(diffOfToggles>0){
 		var newCheckBox : GameObject;
-		//prefabOption.GetComponent(RectTransform).sizeDelta = new Vector2(400, 100);
-		newCheckBox = Instantiate(prefabOption);
-		newCheckBox.transform.SetParent(optionsPanel.transform);
-		
-		newCheckBox.transform.localScale = new Vector3(1,1,1);
+		if(parseInt(myOptionsTypes[optionsSet.length-diffOfToggles].ToString())==TYPE_TEXT){
+			newCheckBox = Instantiate(prefabOptionText);
+			newCheckBox.transform.SetParent(optionsPanel.transform);
+			newCheckBox.transform.localScale = new Vector3(1,1,1);
+			newCheckBox.GetComponentsInChildren(UI.Text)[1].GetComponent(UI.Text).text = optionsSet[optionsSet.length-diffOfToggles];
+		}
+		else{
+			newCheckBox = Instantiate(prefabOptionImage);
+			newCheckBox.transform.SetParent(optionsPanel.transform);
+			newCheckBox.transform.localScale = new Vector3(1,1,1);
+			newCheckBox.GetComponentsInChildren(UI.Image)[2].GetComponent(UI.Image).sprite = optionsSet[optionsSet.length-diffOfToggles];
+		}
 		previousToggles.push(newCheckBox);
-		newCheckBox.GetComponentsInChildren(UI.Text)[0].GetComponent(UI.Text).text = (optionsSet.length-diffOfToggles+1)+". "+optionsSet[optionsSet.length-diffOfToggles];
+		newCheckBox.GetComponentsInChildren(UI.Text)[0].GetComponent(UI.Text).text = (optionsSet.length-diffOfToggles+1).ToString();
 		diffOfToggles-=1;
 		if(selectedAnswers[clickedButton-1]==optionsSet.length-diffOfToggles){
 			newCheckBox.GetComponent(UI.Toggle).isOn = true;

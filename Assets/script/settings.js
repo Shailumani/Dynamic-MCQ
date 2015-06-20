@@ -71,7 +71,12 @@ function save(){
 		    for(i=0;i<4;i++){
 		    	var optionNode : XmlElement = xmlDoc.CreateElement("Option");
 	        	parentNode.AppendChild(optionNode);
-	        	optionNode.InnerText = "This is option no. "+(i+1);
+	        	var typeNode : XmlElement = xmlDoc.CreateElement("Type");
+	        	optionNode.AppendChild(typeNode);
+	        	typeNode.InnerText = "0";
+	        	var valueNode : XmlElement = xmlDoc.CreateElement("Value");
+	        	optionNode.AppendChild(valueNode);
+	        	valueNode.InnerText = "This is option no. "+(i+1);
 		    }
 		    var answerNode : XmlElement = xmlDoc.CreateElement("Answer");
 	        parentNode.AppendChild(answerNode);

@@ -8,7 +8,7 @@ function Start () {
 			if(thisToggle.isOn){
 				toggles = GameObject.Find("Options").GetComponentsInChildren(UI.Toggle);
 				for(var i=0;i<toggles.length;i++){
-					if(toggles[i].GetComponent(UI.Toggle).isOn && toggles[i].name != gameObject.name){
+					if(toggles[i].GetComponent(UI.Toggle).isOn && toggles[i].gameObject != gameObject){
 						toggles[i].GetComponent(UI.Toggle).isOn = false;
 					}
 				}
