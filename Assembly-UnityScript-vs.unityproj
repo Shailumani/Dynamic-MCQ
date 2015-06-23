@@ -46,10 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\script\ImageDescriptionScript.js" />
      <Compile Include="Assets\script\SelectQuestions.js" />
      <Compile Include="Assets\script\buttonEvent.js" />
      <Compile Include="Assets\script\createQuestionButtonEvent.js" />
      <Compile Include="Assets\script\createTableRow.js" />
+     <Compile Include="Assets\script\imageOptionsScript.js" />
      <Compile Include="Assets\script\optionCreateScript.js" />
      <Compile Include="Assets\script\quizOn.js" />
      <Compile Include="Assets\script\quizOver.js" />

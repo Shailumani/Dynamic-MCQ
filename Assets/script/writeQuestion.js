@@ -8,6 +8,9 @@ import UnityEditor;
  */
 import System.IO;
 import System.Xml;
+var QUESTION_TYPE_TEXT : int = 0;
+var QUESTION_TYPE_IMAGE_D : int = 1;
+var QUESTION_TYPE_IMAGE_O : int = 2;
 var TYPE_TEXT :  int = 0;
 var TYPE_IMAGE_DESCRIPTION :  int = 1;
 var TYPE_IMAGE_OPTIONS :  int = 2;
@@ -18,6 +21,12 @@ var prefabButton : GameObject;	//prefab of Button which is to be created dynamic
 var prefabOptionCreateText : GameObject;	//prefab of an option to be created dynamically
 var prefabOptionCreateImage : GameObject;
 var chooseOptionPopupPrefab : GameObject;
+var switchQuestionTypePopupPrefab : GameObject;
+var confirmationPopupPrefab : GameObject;
+var currentQuestionPanel : GameObject;
+var imageOptionsPrefab : GameObject;
+var imageDescriptionPrefab : GameObject;
+var textQuestionPanelPrefab : GameObject;
 var newButtonText : UI.Text;	//text field of a dynamically created button
 var newButton : UI.Button;	//the dynamically created button
 var questions : Array;	//the array where all questions provided by author will be stored
@@ -33,6 +42,8 @@ var options : Array;
 var questionTypes : Array;
 var newPopup : GameObject;
 var newOptionCreate : GameObject;
+var interfaceRect : Rect;
+var mainRect : Rect;
 //var trueBox : UI.Toggle;
 //var falseBox : UI.Toggle;
 var lastButton: UI.Button;
@@ -45,9 +56,22 @@ var changedAuto : boolean;
 var noOfQuestions : int;
 var noOfOptions : Array;
 var optionsTypes : Array;
+var mainPanel : GameObject;
+var questionPanelSize : Vector2;
+var imagePaths : Array;
+var imageSprites : Array;
+var currentQuestionType : int;
 function Start () {
+	imageSprites = new Array();
+	currentQuestionPanel = GameObject.Find("TextQuestionPanel");
+	mainPanel = GameObject.Find("MainPanel");
+	mainRect = mainPanel.GetComponent(RectTransform).rect;
+	questionPanelSize = new Vector2(mainRect.width, mainRect.height);
+	interfaceRect = GameObject.Find("Interface").GetComponent(RectTransform).rect;
 	optionsTypes = new Array();
+	imagePaths = new Array();
 	questionTypes = new Array();
+	currentQuestionType = QUESTION_TYPE_TEXT;
 	autoIncrement = 0;
 	previousToggles = new Array();
 	noOfOptions = new Array();
@@ -60,17 +84,23 @@ function Start () {
 	var i : int;
 	clickedButton=1;
 	questions = new Array();
-	var xMin = -Screen.width/2;
-	var xMax = Screen.width/2;
+	//var xMin = -Screen.width/2;
+	//var xMax = Screen.width/2;
 	var y = Screen.height - 20;
-	offsetButton = 5;
+	var xMin = -interfaceRect.width/2;
+	var xMax = interfaceRect.width/2;
+	offsetButton = -1;
 	changedAuto = false;
 	selectedAnswers = new Array();
 	options = new Array();
+	GameObject.Find("Buttons").GetComponent(UI.GridLayoutGroup).cellSize = new Vector2(GameObject.Find("Buttons").GetComponent(RectTransform).rect.width/noOfQuestions-1, 30);
 	//falseAnswers=new Array();
 	//trueAnswers=new Array();
 	for(i=0;i<noOfQuestions;i++){
 		questions.push("");
+		imagePaths.push("");
+		imageSprites.push("");
+		questionTypes.push(QUESTION_TYPE_TEXT);
 		var newOptions = new Array();
 		var newOptionsTypes = new Array();
 		selectedAnswers.push(0);
@@ -81,7 +111,6 @@ function Start () {
 		}
 		optionsTypes.push(newOptionsTypes);
 		options.push(newOptions);
-		questionTypes.push(TYPE_TEXT);
 		//falseAnswers.push(false);
 		//trueAnswers.push(true);
 	}
@@ -90,12 +119,16 @@ function Start () {
 	for(i=0;i<questions.length;i++){
 		pos = Vector3((buttonWidth/2)+i*buttonWidth,y,0);
 		rot =  Quaternion.identity;
-		newButton = Instantiate(prefabButton, pos, rot).GetComponent(UI.Button);
-		newButton.transform.parent = gameObject.transform;
-		var newRect = newButton.GetComponent(RectTransform);
-		newRect.sizeDelta = new Vector2(buttonWidth, 30);
-		newButton.name = ""+(i+1);
-		newButtonText=newButton.GetComponentInChildren(UI.Text);
+		newButton = Instantiate(prefabButton).GetComponent(UI.Button);
+		newButton.gameObject.transform.SetParent(GameObject.Find("Buttons").transform);
+		newButton.gameObject.transform.localScale = new Vector3(1,1,1);
+		//prefabButton.GetComponent(RectTransform).sizeDelta = new Vector2(buttonWidth, 30);
+		//newButton = Instantiate(prefabButton, Camera.main.ScreenToWorldPoint(pos), rot).GetComponent(UI.Button);
+		//newButton.transform.parent = gameObject.transform;
+		//var newRect = newButton.GetComponent(RectTransform);
+		//newRect.sizeDelta = new Vector2(buttonWidth, 30);
+		newButton.gameObject.name = ""+(i+1);
+		newButtonText=newButton.gameObject.GetComponentInChildren(UI.Text);
 		newButtonText.text=""+(i+1);
 	}
 	questionBox=GetComponentInChildren(UI.InputField);
@@ -137,8 +170,13 @@ function onAddNow(){
 }
 
 function addTextOption(){
+	var parent : String;
+	if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_O)
+		parent = "OptionsImagePanel";
+	else
+		parent = "OptionsTextPanel";
 	newOptionCreate = Instantiate(prefabOptionCreateText);
-	newOptionCreate.transform.SetParent(GameObject.Find("Options").transform);
+	newOptionCreate.transform.SetParent(GameObject.Find(parent).transform);
 	newOptionCreate.transform.localScale = new Vector3(1,1,1);
 	previousToggles.push(newOptionCreate);
 	newOptionCreate.name = "OptionCreateText";
@@ -146,8 +184,13 @@ function addTextOption(){
 }
 
 function addImageOption(){
+	var parent : String;
+	if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_O)
+		parent = "OptionsImagePanel";
+	else
+		parent = "OptionsTextPanel";
 	newOptionCreate = Instantiate(prefabOptionCreateImage);
-	newOptionCreate.transform.SetParent(GameObject.Find("Options").transform);
+	newOptionCreate.transform.SetParent(GameObject.Find(parent).transform);
 	newOptionCreate.transform.localScale = new Vector3(1,1,1);
 	previousToggles.push(newOptionCreate);
 	newOptionCreate.name = "OptionCreateImage";
@@ -203,29 +246,70 @@ function createFile(){
     for(i=0;i<questions.length;i++){
 		parentNode = xmlDoc.CreateElement("Set");
 		xmlDoc.DocumentElement.AppendChild(parentNode);
+		var questionTypeNode : XmlElement = xmlDoc.CreateElement("QType");
+		parentNode.AppendChild(questionTypeNode);
+		questionTypeNode.InnerText = questionTypes[i].ToString();
 		var questionNode : XmlElement = xmlDoc.CreateElement("Question");
 		parentNode.AppendChild(questionNode);
-		questionNode.InnerText = questions[i];
-		var myOptions : Array;
-		var myOptionsTypes : Array;
-		myOptions = new Array();
-		myOptionsTypes = new Array();
-		myOptions = options[i];
-		myOptionsTypes = optionsTypes[i];
-		for(var j=0;j<myOptions.length;j++){	
-			var optionNode : XmlElement = xmlDoc.CreateElement("Option");
-			parentNode.AppendChild(optionNode);
-			var typeNode : XmlElement = xmlDoc.CreateElement("Type");
-			optionNode.AppendChild(typeNode);
-			var type : int = parseInt(myOptionsTypes[j].ToString());
-			typeNode.InnerText = type.ToString();
-			var valueNode : XmlElement = xmlDoc.CreateElement("Value");
-			optionNode.AppendChild(valueNode);
-			if(type==TYPE_TEXT){
-				valueNode.InnerText = myOptions[j];
+		if(questionTypes[i]!=QUESTION_TYPE_IMAGE_O){
+			questionNode.InnerText = questions[i];
+		}
+		var optionSetNode : XmlElement = xmlDoc.CreateElement("OptionSet");
+		parentNode.AppendChild(optionSetNode);
+		if(questionTypes[i]!=QUESTION_TYPE_IMAGE_D){
+			var myOptions : Array;
+			var myOptionsTypes : Array;
+			myOptions = new Array();
+			myOptionsTypes = new Array();
+			myOptions = options[i];
+			myOptionsTypes = optionsTypes[i];
+			for(var j=0;j<myOptions.length;j++){	
+				var optionNode : XmlElement = xmlDoc.CreateElement("Option");
+				optionSetNode.AppendChild(optionNode);
+				var typeNode : XmlElement = xmlDoc.CreateElement("Type");
+				optionNode.AppendChild(typeNode);
+				var type : int = parseInt(myOptionsTypes[j].ToString());
+				typeNode.InnerText = type.ToString();
+				var valueNode : XmlElement = xmlDoc.CreateElement("Value");
+				optionNode.AppendChild(valueNode);
+				if(type==TYPE_TEXT){
+					valueNode.InnerText = myOptions[j];
+				}
+				else{
+					valueNode.InnerText = spriteToString(myOptions[j]);
+				}
 			}
-			else{
-				valueNode.InnerText = spriteToString(myOptions[j]);
+		}
+		if(questionTypes[i]!=QUESTION_TYPE_TEXT){
+			var imageNode : XmlElement = xmlDoc.CreateElement("Image");
+			parentNode.AppendChild(imageNode);
+			imageNode.InnerText = spriteToString(imageSprites[i]);
+			var drawnLineRenderers : Array;
+			if(questionTypes[i]==QUESTION_TYPE_IMAGE_D)
+				drawnLineRenderers = new Array(options[i]);
+			else	
+				drawnLineRenderers = new Array(questions[i]);
+			while(drawnLineRenderers.length>0){
+				var lineNode : XmlElement = xmlDoc.CreateElement("Line");
+				if(questionTypes[i]==QUESTION_TYPE_IMAGE_D){
+					optionSetNode.AppendChild(lineNode);
+				}else{
+					questionNode.AppendChild(lineNode);
+				}
+				var drawnPoints : Array;
+				drawnPoints = drawnLineRenderers.pop();
+				while(drawnPoints.length>0){
+					var thisPoint : Vector2;
+					thisPoint = drawnPoints.pop();
+					var pointNode : XmlElement = xmlDoc.CreateElement("Point");
+					lineNode.AppendChild(pointNode);
+					var xNode : XmlElement = xmlDoc.CreateElement("X");
+					pointNode.AppendChild(xNode);
+					xNode.InnerText = thisPoint.x.ToString();
+					var yNode : XmlElement = xmlDoc.CreateElement("Y");
+					pointNode.AppendChild(yNode);
+					yNode.InnerText = thisPoint.y.ToString();
+				}
 			}
 		}
 		var answerNode : XmlElement = xmlDoc.CreateElement("Answer");
@@ -240,8 +324,15 @@ function spriteToString(mySprite : Sprite){
 	var bytes : byte[] = mySprite.texture.EncodeToPNG();
 	return System.Convert.ToBase64String(bytes);
 }
+
+function imagePathToString(myImagePath : String){
+	var myTexture  = new Texture2D(100, 100);
+	var www : WWW = new WWW("file:///" + myImagePath);
+	www.LoadImageIntoTexture(myTexture);
+	return System.Convert.ToBase64String(myTexture.EncodeToPNG());
+}
 function submit(){
-	changeUI(clickedButton);
+	saveCurrentState();
 	/*checkBoxes = GetComponentsInChildren(UI.Toggle);
 	//print(checkBoxes.Length);
 	//print(clickedButton-1);
@@ -264,14 +355,16 @@ function submit(){
 		if(questions[i]==""){
 			return;
 		}
-		if(int.Parse(selectedAnswers[i].ToString())==0){
-			return;
-		}
-		var myOptions = new Array();
-		myOptions = options[i];
-		for(var j=0;j<myOptions.length;j++){
-			if(myOptions[j]==""){
+		if(questionTypes[i]!=QUESTION_TYPE_IMAGE_D){
+			if(int.Parse(selectedAnswers[i].ToString())==0){
 				return;
+			}
+			var myOptions = new Array();
+			myOptions = options[i];
+			for(var j=0;j<myOptions.length;j++){
+				if(myOptions[j]==""){
+					return;
+				}
 			}
 		}
 		/*if(trueAnswers[i]){
@@ -305,45 +398,96 @@ function readXML(filepath : String, result : Array, tagName : String){
 }
 
 function setQuestion(questionNo : int){
-	questionBox.text=questions[questionNo-1];
 	clickedButton=questionNo;
+	if(questionTypes[questionNo-1]!=currentQuestionType){
+		switch(parseInt(questionTypes[questionNo-1].ToString())){
+			case QUESTION_TYPE_TEXT : switchToText(questionNo);
+									  break;
+			case QUESTION_TYPE_IMAGE_D : switchToImageDescQuestion(questionNo);
+									  break;
+			case QUESTION_TYPE_IMAGE_O : switchToImageOptionsQuestion(questionNo);
+									  break;
+			default : break;
+		}
+	}else{
+		switch(parseInt(questionTypes[questionNo-1].ToString())){
+			case QUESTION_TYPE_IMAGE_D : currentQuestionPanel.GetComponent(ImageDescriptionScript).clearLineRenderers();
+										 currentQuestionPanel.GetComponent(ImageDescriptionScript).reloadRenderers();
+									  break;
+			case QUESTION_TYPE_IMAGE_O : currentQuestionPanel.GetComponent(imageOptionsScript).clearLineRenderers();
+										 currentQuestionPanel.GetComponent(imageOptionsScript).reloadRenderers();
+									  break;
+			default : break;
+		}
+	}
+	populateQuestionPanel(questionNo);
+	//questionBox.text=questions[questionNo-1];
 }
+
+function populateQuestionPanel(questionNo : int){
+	switch(parseInt(questionTypes[questionNo-1].ToString())){
+		case QUESTION_TYPE_TEXT : currentQuestionPanel.GetComponentInChildren(UI.InputField).text = questions[questionNo-1];
+								  break;
+		case QUESTION_TYPE_IMAGE_D : currentQuestionPanel.GetComponent(ImageDescriptionScript).setImage(imageSprites[questionNo-1]);
+									currentQuestionPanel.GetComponentInChildren(UI.InputField).text = questions[questionNo-1];
+									//currentQuestionPanel.GetComponentInChildren(ImageDescriptionScript).reloadRenderers();
+								  	 break;
+		case QUESTION_TYPE_IMAGE_O : currentQuestionPanel.GetComponent(imageOptionsScript).setImage(imageSprites[questionNo-1]);
+									 //currentQuestionPanel.GetComponentInChildren(imageOptionsScript).reloadRenderers();
+									 break;
+		default : print("x");break;
+	}
+}
+
 function changeQuestion(changeAmount : int){
 	if(clickedButton+changeAmount>questions.length || clickedButton+changeAmount<=0){
 		return;
 	}
-	clickedButton+=changeAmount;
-	questionBox.text=questions[clickedButton-1];
+	setQuestion(clickedButton+changeAmount);
+	//questionBox.text=questions[clickedButton-1];
 }
-function changeUI(questionNumber : int){
-	changedAuto=true;
-	var newOptionsTypes = new Array();
-	checkBoxes = GetComponentsInChildren(UI.Toggle);
-	//print(checkBoxes.Length);
-	//print(clickedButton-1);
-	//optionTexts = GameObject.Find("Options").GetComponentsInChildren(UI.InputField);
-	var newOptions = new Array();
-	selectedAnswers[clickedButton - 1] = 0;
-	//noOfOptions[clickedButton-1] = checkBoxes.Length;
-	for(var i = 0;i<checkBoxes.Length;i++){
-		if(checkBoxes[i].gameObject.name=="OptionCreateText"){
+
+function saveCurrentState(){
+	if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_TEXT || 
+		parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_O){
+		var newOptionsTypes = new Array();
+		checkBoxes = currentQuestionPanel.GetComponentsInChildren(UI.Toggle);
+		var newOptions = new Array();
+		selectedAnswers[clickedButton - 1] = 0;
+		for(var i = 0;i<checkBoxes.Length;i++){
+			if(checkBoxes[i].gameObject.name=="OptionCreateText"){
+				newOptionsTypes.push(TYPE_TEXT);
+				newOptions.push(checkBoxes[i].GetComponentInChildren(UI.InputField).text);
+			}else{
+				newOptionsTypes.push(TYPE_IMAGE_OPTIONS);
+				newOptions.push(checkBoxes[i].GetComponentsInChildren(UI.Image)[2].GetComponent(UI.Image).sprite);
+			}
+			if(checkBoxes[i].GetComponent(UI.Toggle).isOn){
+				selectedAnswers[clickedButton-1] = i+1;
+			}
+		}
+		while(newOptions.length<2){
+			newOptions.push("");
 			newOptionsTypes.push(TYPE_TEXT);
-			newOptions.push(checkBoxes[i].GetComponentInChildren(UI.InputField).text);
-		}else{
-			newOptionsTypes.push(TYPE_IMAGE_OPTIONS);
-			newOptions.push(checkBoxes[i].GetComponentsInChildren(UI.Image)[2].GetComponent(UI.Image).sprite);
 		}
-		if(checkBoxes[i].GetComponent(UI.Toggle).isOn){
-			selectedAnswers[clickedButton-1] = i+1;
-		}
+		optionsTypes[clickedButton-1]=new Array(newOptionsTypes);
+		options[clickedButton-1] = new Array(newOptions);
 	}
-	while(newOptions.length<2){
-		newOptions.push("");
-		newOptionsTypes.push(TYPE_TEXT);
+	if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_TEXT || 
+		parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_D){
+		questions[clickedButton-1] = currentQuestionPanel.GetComponentInChildren(UI.InputField).text;
 	}
-	optionsTypes[clickedButton-1]=newOptionsTypes;
-	options[clickedButton-1] = newOptions;
-	questions[clickedButton-1] = questionBox.text;
+	if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_O){
+		questions[clickedButton-1] = new Array(currentQuestionPanel.GetComponent(imageOptionsScript).getLineRenderers());
+	}	
+	if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_D){
+		options[clickedButton-1] = new Array(currentQuestionPanel.GetComponent(ImageDescriptionScript).getLineRenderers());	
+	}	
+}
+
+function changeUI(questionNumber : int){
+	print("changing");
+	saveCurrentState();
 	lastButton=buttons[offsetButton + clickedButton].GetComponent(UI.Button);
 	lastButton.colors.normalColor=Color.grey;
 	if(questionNumber>=1){
@@ -362,18 +506,16 @@ function changeUI(questionNumber : int){
 	buttons[clickedButton+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;
 	buttons[clickedButton+offsetButton].GetComponent(UI.Button).colors.highlightedColor=Color.cyan;
 	updateOptions(options[clickedButton-1]);
-/*	if(trueAnswers[clickedButton-1]){
-		trueBox.isOn=true;
-		falseBox.isOn=false;
-	}
-	else{
-		falseBox.isOn=true;
-		trueBox.isOn=false;
-	}
-	changedAuto=false;*/	
 }
 
 function updateOptions(myOptions : Array){
+	var parent : String;
+	if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_D){
+		return;
+	}else if(parseInt(questionTypes[clickedButton-1].ToString())==QUESTION_TYPE_IMAGE_O)
+		parent = "OptionsImagePanel";
+	else
+		parent = "OptionsTextPanel";
 	while(previousToggles.length>0){
 		Destroy(previousToggles.pop());
 	}
@@ -384,14 +526,14 @@ function updateOptions(myOptions : Array){
 		var newOption : GameObject;
 		if(parseInt(myOptionsTypes[i].ToString())==TYPE_TEXT){
 			newOption = Instantiate(prefabOptionCreateText);
-			newOption.transform.SetParent(GameObject.Find("Options").transform);
+			newOption.transform.SetParent(GameObject.Find(parent).transform);
 			newOption.transform.localScale = new Vector3(1,1,1);
 			newOption.name = "OptionCreateText";
 			newOption.GetComponentInChildren(UI.InputField).text = myOptions[i];
 		}
 		else{
 			newOption = Instantiate(prefabOptionCreateImage);
-			newOption.transform.SetParent(GameObject.Find("Options").transform);
+			newOption.transform.SetParent(GameObject.Find(parent).transform);
 			newOption.transform.localScale = new Vector3(1,1,1);
 			newOption.name = "OptionCreateImage";
 			newOption.GetComponentsInChildren(UI.Image)[2].GetComponent(UI.Image).sprite = myOptions[i];
@@ -406,15 +548,103 @@ function updateOptions(myOptions : Array){
 }
 function switchType(){
 	if(int.Parse(questionTypes[clickedButton-1].ToString())==TYPE_TEXT){
-		GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to text question";
 		switchToImage();
 	}else{
-		GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to image question";
-		questionTypes[clickedButton-1] = TYPE_TEXT;
+		switchToText(clickedButton);
+		changeUI(clickedButton);
 	}
 }
 function switchToImage(){
-	questionTypes[clickedButton-1] = TYPE_IMAGE_DESCRIPTION;
+	newPopup = Instantiate(switchQuestionTypePopupPrefab);
+	newPopup.transform.SetParent(gameObject.transform);
+	newPopup.transform.position = gameObject.transform.position;
+	newPopup.transform.localScale = new Vector3(1,1,1);
+	var switchButton : UI.Button = newPopup.GetComponentsInChildren(UI.Button)[0].GetComponent(UI.Button);
+	switchButton.onClick.AddListener(onSwitchNow);
+	var cancelSwitch : UI.Button = newPopup.GetComponentsInChildren(UI.Button)[1].GetComponent(UI.Button);
+	cancelSwitch.onClick.AddListener(onCancelSwitch);
+}
+
+function onCancelSwitch(){
+	Destroy(newPopup);
+}
+
+function onSwitchNow(){
+	imagePaths[clickedButton-1] = onBrowseForImage();
+	var thisTexture : Texture2D = new Texture2D(100, 100);
+	var www : WWW = new WWW("file:///" + imagePaths[clickedButton-1]);
+	www.LoadImageIntoTexture(thisTexture);
+	imageSprites[clickedButton-1] = 
+					Sprite.Create(thisTexture, new Rect(0, 0, thisTexture.width, thisTexture.height), new Vector2(0.5f, 0.0f));
+	var questionTypeToggles : Component[] = newPopup.GetComponentsInChildren(UI.Toggle);
+	if(questionTypeToggles[0].GetComponent(UI.Toggle).isOn){
+		Destroy(newPopup);
+		switchToImageDescQuestion(clickedButton);
+		currentQuestionPanel.GetComponent(ImageDescriptionScript).setImage(imageSprites[clickedButton-1]);
+		//if(currentQuestionType == QUESTION_TYPE_IMAGE_O)
+		//	questions[clickedButton-1] = new Array();
+		//else{
+			questions[clickedButton-1] = "";
+			options[clickedButton-1] = new Array();
+		//}
+	}else{
+		Destroy(newPopup);
+		switchToImageOptionsQuestion(clickedButton);
+		currentQuestionPanel.GetComponent(imageOptionsScript).setImage(imageSprites[clickedButton-1]);
+		questions[clickedButton-1] = "";
+		var myOptionsTypes : Array = new Array();
+		var myOptions : Array = new Array();
+		for(var i=0;i<2;i++){
+			myOptions.push("");
+			myOptionsTypes.push(TYPE_TEXT);
+		}
+		options[clickedButton-1] = new Array(myOptions);
+		optionsTypes[clickedButton-1] = new Array(myOptionsTypes);
+		updateOptions(options[clickedButton-1]);
+	}
+}
+
+function onBrowseForImage(){
+#if UNITY_ANDROID
+	return(Application.persistentDataPath+"\abc.png");
+#endif
+#if UNITY_EDITOR
+	return EditorUtility.OpenFilePanel("Select Image", "", "jpg");
+#endif
+
+}
+
+function switchToImageDescQuestion(questionNo : int){
+	Destroy(currentQuestionPanel);
+	currentQuestionPanel = createInstance(imageDescriptionPrefab, mainPanel.gameObject, questionPanelSize);
+	questionTypes[questionNo-1] = QUESTION_TYPE_IMAGE_D;
+	currentQuestionType = QUESTION_TYPE_IMAGE_D;
+	GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to text question";
+}
+function switchToImageOptionsQuestion(questionNo : int){
+	Destroy(currentQuestionPanel);
+	currentQuestionPanel = createInstance(imageOptionsPrefab, mainPanel.gameObject, questionPanelSize);
+	questionTypes[questionNo-1] = QUESTION_TYPE_IMAGE_O;
+	currentQuestionType = QUESTION_TYPE_IMAGE_O;
+	GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to text question";
+	previousToggles = new Array();
+}
+function switchToText(questionNo : int){
+	Destroy(currentQuestionPanel);
+	currentQuestionPanel = createInstance(textQuestionPanelPrefab, mainPanel.gameObject, questionPanelSize);
+	questionTypes[questionNo-1] = QUESTION_TYPE_TEXT;
+	currentQuestionType = QUESTION_TYPE_TEXT;
+	GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to image question";
+	previousToggles = new Array();
+}
+function createInstance(prefab : GameObject, parent : GameObject, size : Vector2){
+	//print(pos);
+	prefab.GetComponent(RectTransform).sizeDelta = size;
+	var myCurrentPanel = Instantiate(prefab);
+	myCurrentPanel.transform.SetParent(parent.transform);
+	myCurrentPanel.transform.localScale = new Vector3(1,1,1);
+	myCurrentPanel.GetComponent(RectTransform).position = parent.transform.position;
+	return myCurrentPanel;
 }
 /*function toggleTrue(){
 	if(changedAuto){
