@@ -104,7 +104,7 @@ function Update () {
 					//Debug.Log(pos);
 					lineRenderer.SetPosition(0, Camera.main.ScreenToWorldPoint(pos));
 					//drawnPoints.push(new Vector2((pos.x/Screen.width*mainRect.width)/imageSize.x, (pos.y/Screen.height*mainRect.height)/imageSize.y));
-					drawnPoints.push(new Vector2(pos.x/imageSize.x, pos.y/imageSize.y));
+					drawnPoints.push(new Vector2((pos.x-imagePos.x)/imageSize.x, (pos.y-imagePos.y)/imageSize.y));
 //					CheckPoint(pos);
 //				}
 				}
@@ -123,7 +123,7 @@ function Update () {
 					//Debug.Log(pos);
 					lineRenderer.SetPosition(noOfCurVertices-1, Camera.main.ScreenToWorldPoint(pos));
 					//drawnPoints.push(new Vector2((pos.x/Screen.width*mainRect.width)/imageSize.x, (pos.y/Screen.height*mainRect.height)/imageSize.y));
-					drawnPoints.push(new Vector2(pos.x/imageSize.x, pos.y/imageSize.y));
+					drawnPoints.push(new Vector2((pos.x-imagePos.x)/imageSize.x, (pos.y-imagePos.y)/imageSize.y));
 		//				CheckPoint(pos);
 				}
 		}
@@ -171,7 +171,7 @@ function Update () {
 			//Debug.Log(pos);
 			lineRenderer.SetPosition(0, Camera.main.ScreenToWorldPoint(pos));
 			//drawnPoints.push(new Vector2((pos.x/Screen.width*mainRect.width)/imageSize.x, (pos.y/Screen.height*mainRect.height)/imageSize.y));
-			drawnPoints.push(new Vector2(pos.x/imageSize.x, pos.y/imageSize.y));
+			drawnPoints.push(new Vector2((pos.x-imagePos.x)/imageSize.x, (pos.y-imagePos.y)/imageSize.y));
 		}
 	}
 	if(Input.GetMouseButtonUp(0)){
@@ -200,7 +200,7 @@ function Update () {
 			print(imageSize.x);
 			lineRenderer.SetPosition((noOfCurVertices - 1), Camera.main.ScreenToWorldPoint(pos));
 			//drawnPoints.push(new Vector2((pos.x/Screen.width*mainRect.width)/imageSize.x, (pos.y/Screen.height*mainRect.height)/imageSize.y));
-			drawnPoints.push(new Vector2(pos.x/imageSize.x, pos.y/imageSize.y));
+			drawnPoints.push(new Vector2((pos.x-imagePos.x)/imageSize.x, (pos.y-imagePos.y)/imageSize.y));
 		}
 	}
 #endif
@@ -296,7 +296,7 @@ function drawLineRenderers(lineRenderersArray : Array){
 			var point : Vector2;
 			point = lastPoints.pop();
 			drawnPoints.push(point);
-			var pos = new Vector3(point.x*imageSize.x, point.y*imageSize.y, Mathf.Abs(Camera.main.transform.position.z)+1);		
+			var pos = new Vector3(point.x*imageSize.x+imagePos.x, point.y*imageSize.y+imagePos.y, Mathf.Abs(Camera.main.transform.position.z)+1);		
 			lineRenderer.SetPosition(noOfCurVertices-1, Camera.main.ScreenToWorldPoint(pos));
 			noOfCurVertices++;
 		}
