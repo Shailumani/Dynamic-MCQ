@@ -1,8 +1,4 @@
 ﻿#pragma strict
-
-#if UNITY_EDITOR
-import UnityEditor;
-#endif
 /*
  * Script to handle the scene where questions are written for creation of quiz.
  */
@@ -195,11 +191,16 @@ function addImageOption(){
 	previousToggles.push(newOptionCreate);
 	newOptionCreate.name = "OptionCreateImage";
 	newOptionCreate.GetComponentInChildren(UI.Text).text = autoIncrement.ToString();
-	onBrowseForOption();
+#if UNITY_ANDROID
+	var jc : AndroidJavaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+	var currentActivity : AndroidJavaObject = jc.GetStatic.<AndroidJavaObject>("currentActivity");
+	currentActivity.Call("selectImage", "Interface", "onBrowseForOption");
+#else
+	onBrowseForOption(browseForImage());
+#endif
 }
 
-function onBrowseForOption(){
-	var thisImagePath : String = browse();
+function onBrowseForOption(thisImagePath : String){
 	var thisTexture : Texture2D = new Texture2D(100, 100);
 	var www : WWW = new WWW("file:///" + thisImagePath);
 	www.LoadImageIntoTexture(thisTexture);
@@ -207,12 +208,9 @@ function onBrowseForOption(){
 					Sprite.Create(thisTexture, new Rect(0, 0, thisTexture.width, thisTexture.height), new Vector2(0.5f, 0.0f));
 }
 
-function browse(){
-#if UNITY_EDITOR		
-		return EditorUtility.OpenFilePanel("Select Image", "", "jpg");
-#else
-		return Application.persistentDataPath+"/abc.png";
-#endif
+function browseForImage(){
+	var browseScript = new Browse();
+	return browseScript.browseForImage();
 }
 
 function createFile(){
@@ -570,7 +568,17 @@ function onCancelSwitch(){
 }
 
 function onSwitchNow(){
-	imagePaths[clickedButton-1] = onBrowseForImage();
+#if UNITY_ANDROID
+	var jc : AndroidJavaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+	var currentActivity : AndroidJavaObject = jc.GetStatic.<AndroidJavaObject>("currentActivity");
+	currentActivity.Call("selectImage", "Interface", "completeSwitchAction");
+#else
+	completeSwitchAction(browseForImage());
+#endif
+}
+
+function completeSwitchAction(retrievedPath : String){
+	imagePaths[clickedButton-1] = retrievedPath;
 	var thisTexture : Texture2D = new Texture2D(100, 100);
 	var www : WWW = new WWW("file:///" + imagePaths[clickedButton-1]);
 	www.LoadImageIntoTexture(thisTexture);
@@ -602,16 +610,6 @@ function onSwitchNow(){
 		optionsTypes[clickedButton-1] = new Array(myOptionsTypes);
 		updateOptions(options[clickedButton-1]);
 	}
-}
-
-function onBrowseForImage(){
-#if UNITY_ANDROID
-	return(Application.persistentDataPath+"\abc.png");
-#endif
-#if UNITY_EDITOR
-	return EditorUtility.OpenFilePanel("Select Image", "", "jpg");
-#endif
-
 }
 
 function switchToImageDescQuestion(questionNo : int){

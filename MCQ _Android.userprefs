@@ -1,11 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\quizOn.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\settings.js">
     <Files>
-      <File FileName="Assets\script\quizOn.js" Line="143" Column="21" />
-      <File FileName="Assets\script\writeQuestion.js" Line="68" Column="10" />
-      <File FileName="Assets\script\ImageDescriptionAnswerScript.js" Line="317" Column="16" />
-      <File FileName="Assets\script\imageOptionsAnswerScript.js" Line="104" Column="24" />
+      <File FileName="Assets\script\settings.js" Line="41" Column="24" />
+      <File FileName="Assets\script\quizOn.js" Line="1" Column="1" />
+      <File FileName="Assets\script\ImageDescriptionAnswerScript.js" Line="1" Column="1" />
+      <File FileName="Assets\script\imageOptionsAnswerScript.js" Line="1" Column="1" />
+      <File FileName="Assets\script\createTableHeading.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Browse.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\readDirectory.js" Line="1" Column="1" />
+      <File FileName="Assets\script\startQuiz.js" Line="1" Column="1" />
+      <File FileName="Assets\script\writeQuestion.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

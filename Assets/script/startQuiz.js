@@ -11,6 +11,9 @@ function Start () {
 		Application.LoadLevel("settings");
 	}else{
 		defaultPath = paths[0];
+		if(!Directory.Exists(defaultPath)){
+			Application.LoadLevel("settings");
+		}
 	} 
 	nameBox = GetComponentInChildren(UI.InputField);
 }

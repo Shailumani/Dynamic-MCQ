@@ -3,11 +3,20 @@ import System.IO;
 import System.Xml;
 var pathBox : UI.InputField;
 var paths : Array;
+#if UNITY_ANDROID
+var browseClass : AndroidJavaClass;
+#endif
 function Start () {
+#if UNITY_ANDROID
+		AndroidJNI.AttachCurrentThread();
+		browseClass = new AndroidJavaClass("com.IITB_CDEEP.MCQ_FINAL.BrowseAndroid");
+#endif
 	paths = new Array();
 	pathBox = GetComponentInChildren(UI.InputField);
-	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
-	if(paths.length == 0){
+	if(File.Exists(Application.persistentDataPath+"/settings.xml")){
+		readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
+		pathBox.text = paths[0];
+	}else{
 		var xmlDoc : XmlDocument = new XmlDocument();
         var xmlDeclaration : XmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0","utf-8",null);
         var rootNode : XmlElement = xmlDoc.CreateElement("Settings");
@@ -18,11 +27,26 @@ function Start () {
         parentNode.InnerText = Application.persistentDataPath;
         xmlDoc.Save(Application.persistentDataPath+"/settings.xml");
         pathBox.text = Application.persistentDataPath;
-	}else{
-		pathBox.text = paths[0];
 	}
-	
 }
+
+function onBrowse(){
+#if UNITY_ANDROID
+	print("Browse started");
+	var jc : AndroidJavaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+	var currentActivity : AndroidJavaObject = jc.GetStatic.<AndroidJavaObject>("currentActivity");
+	currentActivity.Call("selectDirectory", "Panel", "setBrowsedPath");
+	print("function called");
+#else
+	setBrowsedPath(Browse.browseForFolder());
+#endif
+}
+
+function setBrowsedPath(thisPath : String){
+	print("function returned");
+	pathBox.text = thisPath;
+}
+
 function reset(){
 	pathBox.text = Application.persistentDataPath;
 }
@@ -40,7 +64,7 @@ function readXML(filepath : String, result : Array, tagName : String){
 	}
 }
 function save(){
-	if(pathBox.text.Length>0){
+	if(Directory.Exists(pathBox.text)){
 		var xmlDoc : XmlDocument;
 		if(!File.Exists(pathBox.text+"/questions.qz")){
 			xmlDoc = new XmlDocument();

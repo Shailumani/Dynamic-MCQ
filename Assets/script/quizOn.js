@@ -161,6 +161,9 @@ function submit(){
 function replay(){
 	Application.LoadLevel("question");
 }
+function onQuit(){
+	Application.LoadLevel("start");
+}
 function readXML(filepath : String, result : Array, tagName : String){
     var xmlDoc : XmlDocument = new XmlDocument();
     if(File.Exists (filepath))
@@ -310,12 +313,14 @@ function saveCurrentState(){
 		}
 		if(selectedAnswers[clickedButton-1]==parseInt(correctAnswers[clickedButton-1].ToString())){
 			isCorrect[clickedButton-1] = true;
+		}else{
+			isCorrect[clickedButton-1] = false;
 		}
 	}
 	if(currentQuestionType==QUESTION_TYPE_IMAGE_D){
 		newLineRenderers[clickedButton-1] = new Array(currentQuestionPanel.GetComponent(ImageDescriptionAnswerScript).getLineRenderers());	
 		isCorrect[clickedButton-1] = currentQuestionPanel.GetComponent(ImageDescriptionAnswerScript).onSubmit();
-	}	
+	}
 }
 
 function changeUI(questionNumber : int){

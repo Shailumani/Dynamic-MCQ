@@ -7,7 +7,10 @@ var newRow : GameObject;
 function Start () {
 	var paths : Array = new Array();
 	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
-	defaultPath = paths[0]; 
+	defaultPath = paths[0];
+	if(!Directory.Exists(defaultPath)){
+		Application.LoadLevel("settings");
+	}
 	var info = new DirectoryInfo(defaultPath);
  	var fileInfo = info.GetFiles("*.qz");
  	for (file in fileInfo){
@@ -15,6 +18,9 @@ function Start () {
  		newRow.transform.SetParent(transform);
  		newRow.name = file.FullName;
  	}
+}
+function onBack(){
+	Application.LoadLevel("start");
 }
 function readXML(filepath : String, result : Array, tagName : String){
     var xmlDoc : XmlDocument = new XmlDocument();
