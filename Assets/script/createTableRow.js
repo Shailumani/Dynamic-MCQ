@@ -24,6 +24,10 @@ function Start () {
 	}
 	textComponents[2].GetComponent(UI.Text).text = noOfQuesArray[0];
 	textComponents[3].GetComponent(UI.Text).text = authors[0];
+	var isMCQArray = new Array();
+	readXML(gameObject.name, isMCQArray, "isMCQ");
+	if(parseInt(isMCQArray[0].ToString())==1)
+		GetComponentInChildren(UI.Toggle).isOn = true;
 	attemptButton = gameObject.GetComponentsInChildren(UI.Button)[0].GetComponent(UI.Button);
 	attemptButton.onClick.AddListener(
 		function(){
@@ -38,7 +42,7 @@ function Start () {
 			xmlDoc.DocumentElement.AppendChild(parentNode);
 			parentNode.InnerText = gameObject.name;
 		  	xmlDoc.Save(Application.persistentDataPath+"/temp.xml");
-		  	Application.LoadLevel("question");
+		  	LevelManager.Load("question");
 		}
 	);	
 }

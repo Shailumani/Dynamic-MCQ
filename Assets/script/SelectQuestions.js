@@ -10,6 +10,7 @@ var userName : String;
 var noOfQuesInput:UI.InputField;
 var noOfQuestions : int;
 var categories : Array;
+var isMultipleCorrect : UI.Toggle;
 var Science : UI.Toggle;
 var Maths : UI.Toggle;
 var English :UI.Toggle;
@@ -67,6 +68,9 @@ function proceed(){
 		xmlDoc.DocumentElement.AppendChild(parentNode);
 		parentNode.InnerText = categories[i];
     }
+    parentNode = xmlDoc.CreateElement("isMCQ");
+	xmlDoc.DocumentElement.AppendChild(parentNode);
+	parentNode.InnerText = isMultipleCorrect.isOn ? "1" : "0";
     parentNode = xmlDoc.CreateElement("Author");
 	xmlDoc.DocumentElement.AppendChild(parentNode);
 	parentNode.InnerText = userName;
@@ -77,10 +81,10 @@ function proceed(){
 	xmlDoc.DocumentElement.AppendChild(parentNode);
 	parentNode.InnerText = quizName;
   	xmlDoc.Save(Application.persistentDataPath+"/temp.xml");
-	Application.LoadLevel("createQuestion");
+	LevelManager.Load("createQuestion");
 }
 function Cancel(){
-	Application.LoadLevel("start");
+	LevelManager.Load("start");
 }
 function Update () {
 

@@ -13,6 +13,7 @@ var defaultScorePath : String;
 var pos: Vector3;
 var rot : Quaternion;
 var selectedAnswers : Array;
+var isMCQArray : Array;
 var prefabOptionText : GameObject;
 var prefabOptionImage : GameObject;
 var prefabButton : GameObject;
@@ -79,6 +80,8 @@ function Start () {
 	optionsTypes = new Array();
 	questionTypes = new Array();
 	imageSprites = new Array();
+	isMCQArray = new Array();
+	readXML(questionsFileName, isMCQArray, "isMCQ");
 	readXML(questionsFileName, questionTypes, "QType");
 	readXML(questionsFileName, correctAnswers, "Answer");
 	readQuestionsFile(questionsFileName, questions, options, optionsTypes, imageSprites);
@@ -101,7 +104,7 @@ function Start () {
 	for(i=0;i<questions.length;i++){
 		falseAnswers.push(false);
 		trueAnswers.push(false);
-		selectedAnswers.push(0);
+		selectedAnswers.push(new Array());
 	}
 	changedAuto=true;
 	var noOfQuestions = questions.length;
@@ -281,7 +284,7 @@ function setQuestion(questionNo : int){
 
 function populateQuestionPanel(questionNo : int){
 	switch(parseInt(questionTypes[questionNo-1].ToString())){
-		case QUESTION_TYPE_TEXT : currentQuestionPanel.GetComponentInChildren(UI.Text).text = questions[questionNo-1];
+		case QUESTION_TYPE_TEXT : currentQuestionPanel.GetComponentInChildren(UI.Text).text = "Q."+questionNo+"  "+questions[questionNo-1];
 								  break;
 		case QUESTION_TYPE_IMAGE_D : currentQuestionPanel.GetComponent(ImageDescriptionAnswerScript).setImage(imageSprites[questionNo-1]);
 									currentQuestionPanel.GetComponentsInChildren(UI.Text)[1].GetComponent(UI.Text).text = questions[questionNo-1];
@@ -305,13 +308,14 @@ function changeQuestion(changeAmount : int){
 function saveCurrentState(){
 	if(currentQuestionType!=QUESTION_TYPE_IMAGE_D){
 		checkBoxes = currentQuestionPanel.GetComponentsInChildren(UI.Toggle);
+		var thisSelectedAnswers = new Array();
 		for(var boxNo=1;boxNo<=checkBoxes.length;boxNo++){
 			if(checkBoxes[boxNo-1].GetComponent(UI.Toggle).isOn){
-				selectedAnswers[clickedButton-1] = boxNo;
-				break;
+				thisSelectedAnswers.push(boxNo);
 			}
 		}
-		if(selectedAnswers[clickedButton-1]==parseInt(correctAnswers[clickedButton-1].ToString())){
+		selectedAnswers[clickedButton-1] = thisSelectedAnswers;
+		if(selectedAnswers[clickedButton-1].ToString().Equals(correctAnswers[clickedButton-1].ToString())){
 			isCorrect[clickedButton-1] = true;
 		}else{
 			isCorrect[clickedButton-1] = false;
@@ -375,10 +379,17 @@ function updateOptions(myOptions : Array){
 			newOption.name = "OptionCreateImage";
 			newOption.GetComponentsInChildren(UI.Image)[2].GetComponent(UI.Image).sprite = myOptions[i];
 		}
-		if(selectedAnswers[clickedButton-1]==(i+1)){
-			newOption.GetComponentInChildren(UI.Toggle).isOn = true;
+		var thisSelectedAnswers : Array = selectedAnswers[clickedButton-1];
+		for(var j=0;j<thisSelectedAnswers.length;j++){
+			if(parseInt(thisSelectedAnswers[j].ToString())==i+1){
+				newOption.GetComponentInChildren(UI.Toggle).isOn = true;
+				break;
+			}	
 		}
 		previousToggles.push(newOption);
+		if(int.Parse(isMCQArray[0])==0){
+			newOption.AddComponent.<toggleEvent>();
+		}
 		newOption.GetComponentInChildren(UI.Text).text = autoIncrement.ToString(); 
 		autoIncrement++;
 	}

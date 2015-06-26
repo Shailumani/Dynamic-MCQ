@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 5f06efb6571e9bc4c87d0e465bb3d064
+timeCreated: 1435320937
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - alertPopupPrefab: {fileID: 104516, guid: 3d49cb9f5d291da4cbdc11e65c006087, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

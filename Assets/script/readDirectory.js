@@ -4,6 +4,7 @@ import System.IO;
 var defaultPath : String;
 var row : GameObject;
 var newRow : GameObject;
+var loadingPanel : GameObject;
 function Start () {
 	var paths : Array = new Array();
 	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
@@ -18,6 +19,7 @@ function Start () {
  		newRow.transform.SetParent(transform);
  		newRow.name = file.FullName;
  	}
+ 	Destroy(loadingPanel);
 }
 function onBack(){
 	Application.LoadLevel("start");

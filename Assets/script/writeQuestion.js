@@ -20,6 +20,7 @@ var chooseOptionPopupPrefab : GameObject;
 var switchQuestionTypePopupPrefab : GameObject;
 var confirmationPopupPrefab : GameObject;
 var currentQuestionPanel : GameObject;
+var alertPopupPrefab : GameObject;
 var imageOptionsPrefab : GameObject;
 var imageDescriptionPrefab : GameObject;
 var textQuestionPanelPrefab : GameObject;
@@ -40,6 +41,7 @@ var newPopup : GameObject;
 var newOptionCreate : GameObject;
 var interfaceRect : Rect;
 var mainRect : Rect;
+var isMCQArray : Array;
 //var trueBox : UI.Toggle;
 //var falseBox : UI.Toggle;
 var lastButton: UI.Button;
@@ -73,8 +75,10 @@ function Start () {
 	noOfOptions = new Array();
 	var paths : Array = new Array();
 	var noOfQuestionsArray = new Array();
+	isMCQArray = new Array();
 	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
 	readXML(Application.persistentDataPath+"/temp.xml", noOfQuestionsArray, "Number");
+	readXML(Application.persistentDataPath+"/temp.xml", isMCQArray, "isMCQ");
 	noOfQuestions = int.Parse(noOfQuestionsArray[0]);
 	defaultPath = paths[0]; 
 	var i : int;
@@ -99,7 +103,7 @@ function Start () {
 		questionTypes.push(QUESTION_TYPE_TEXT);
 		var newOptions = new Array();
 		var newOptionsTypes = new Array();
-		selectedAnswers.push(0);
+		selectedAnswers.push(new Array());
 		//noOfOptions.push(2);
 		for(var j=0;j<2;j++){
 			newOptions.push("");
@@ -142,6 +146,14 @@ function Update () {
 
 }
 
+function giveAlert(message : String){
+	var alertPopup : GameObject = Instantiate(alertPopupPrefab);
+	alertPopup.transform.SetParent(gameObject.transform);
+	alertPopup.transform.position = gameObject.transform.position;
+	alertPopup.transform.localScale = new Vector3(1,1,1);
+	alertPopup.GetComponentInChildren(UI.Text).text = message;
+	return;
+}
 function addOption(){
 	newPopup = Instantiate(chooseOptionPopupPrefab);
 	newPopup.transform.SetParent(gameObject.transform);
@@ -177,6 +189,9 @@ function addTextOption(){
 	previousToggles.push(newOptionCreate);
 	newOptionCreate.name = "OptionCreateText";
 	newOptionCreate.GetComponentInChildren(UI.Text).text = autoIncrement.ToString();
+	if(int.Parse(isMCQArray[0])==0){
+		newOptionCreate.AddComponent.<toggleEvent>();
+	}
 }
 
 function addImageOption(){
@@ -190,6 +205,9 @@ function addImageOption(){
 	newOptionCreate.transform.localScale = new Vector3(1,1,1);
 	previousToggles.push(newOptionCreate);
 	newOptionCreate.name = "OptionCreateImage";
+	if(int.Parse(isMCQArray[0])==0){
+		newOptionCreate.AddComponent.<toggleEvent>();
+	}
 	newOptionCreate.GetComponentInChildren(UI.Text).text = autoIncrement.ToString();
 #if UNITY_ANDROID
 	var jc : AndroidJavaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -241,6 +259,9 @@ function createFile(){
 	parentNode = xmlDoc.CreateElement("Name");
 	xmlDoc.DocumentElement.AppendChild(parentNode);
 	parentNode.InnerText = quizNames[0];
+	parentNode = xmlDoc.CreateElement("isMCQ");
+	xmlDoc.DocumentElement.AppendChild(parentNode);
+	parentNode.InnerText = isMCQArray[0].ToString();
     for(i=0;i<questions.length;i++){
 		parentNode = xmlDoc.CreateElement("Set");
 		xmlDoc.DocumentElement.AppendChild(parentNode);
@@ -351,16 +372,20 @@ function submit(){
 	correctAnswers = new Array();
 	for(var i=0;i<questions.length;i++){
 		if(questions[i]==""){
+			giveAlert("Please fill question No. "+(i+1)+"!");
 			return;
 		}
 		if(questionTypes[i]!=QUESTION_TYPE_IMAGE_D){
-			if(int.Parse(selectedAnswers[i].ToString())==0){
+			var thisSelectedAnswers : Array = selectedAnswers[i];
+			if(thisSelectedAnswers.length==0){
+				giveAlert("Please select an answer for question No. "+(i+1)+"!");
 				return;
 			}
 			var myOptions = new Array();
 			myOptions = options[i];
 			for(var j=0;j<myOptions.length;j++){
 				if(myOptions[j]==""){
+					giveAlert("Please fill all options in question No. "+(i+1)+"!");
 					return;
 				}
 			}
@@ -451,7 +476,7 @@ function saveCurrentState(){
 		var newOptionsTypes = new Array();
 		checkBoxes = currentQuestionPanel.GetComponentsInChildren(UI.Toggle);
 		var newOptions = new Array();
-		selectedAnswers[clickedButton - 1] = 0;
+		var thisSelectedAnswers = new Array();
 		for(var i = 0;i<checkBoxes.Length;i++){
 			if(checkBoxes[i].gameObject.name=="OptionCreateText"){
 				newOptionsTypes.push(TYPE_TEXT);
@@ -461,9 +486,10 @@ function saveCurrentState(){
 				newOptions.push(checkBoxes[i].GetComponentsInChildren(UI.Image)[2].GetComponent(UI.Image).sprite);
 			}
 			if(checkBoxes[i].GetComponent(UI.Toggle).isOn){
-				selectedAnswers[clickedButton-1] = i+1;
+				thisSelectedAnswers.push(i+1);
 			}
 		}
+		selectedAnswers[clickedButton-1] = thisSelectedAnswers;
 		while(newOptions.length<2){
 			newOptions.push("");
 			newOptionsTypes.push(TYPE_TEXT);
@@ -536,10 +562,17 @@ function updateOptions(myOptions : Array){
 			newOption.name = "OptionCreateImage";
 			newOption.GetComponentsInChildren(UI.Image)[2].GetComponent(UI.Image).sprite = myOptions[i];
 		}
-		if(selectedAnswers[clickedButton-1]==(i+1)){
-			newOption.GetComponentInChildren(UI.Toggle).isOn = true;
+		var thisSelectedAnswers : Array = selectedAnswers[clickedButton-1];
+		for(var j=0;j<thisSelectedAnswers.length;j++){
+			if(parseInt(thisSelectedAnswers[j].ToString())==i+1){
+				newOption.GetComponentInChildren(UI.Toggle).isOn = true;
+				break;
+			}	
 		}
 		previousToggles.push(newOption);
+		if(int.Parse(isMCQArray[0])==0){
+			newOption.AddComponent.<toggleEvent>();
+		}
 		newOption.GetComponentInChildren(UI.Text).text = autoIncrement.ToString(); 
 		autoIncrement++;
 	}
@@ -618,6 +651,7 @@ function switchToImageDescQuestion(questionNo : int){
 	questionTypes[questionNo-1] = QUESTION_TYPE_IMAGE_D;
 	currentQuestionType = QUESTION_TYPE_IMAGE_D;
 	GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to text question";
+	GameObject.Find("Add Option").GetComponentInChildren(UI.Button).interactable = false;
 }
 function switchToImageOptionsQuestion(questionNo : int){
 	Destroy(currentQuestionPanel);
@@ -626,6 +660,7 @@ function switchToImageOptionsQuestion(questionNo : int){
 	currentQuestionType = QUESTION_TYPE_IMAGE_O;
 	GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to text question";
 	previousToggles = new Array();
+	GameObject.Find("Add Option").GetComponentInChildren(UI.Button).interactable = true;
 }
 function switchToText(questionNo : int){
 	Destroy(currentQuestionPanel);
@@ -634,6 +669,7 @@ function switchToText(questionNo : int){
 	currentQuestionType = QUESTION_TYPE_TEXT;
 	GameObject.Find("Switch").GetComponentInChildren(UI.Text).text = "Switch to image question";
 	previousToggles = new Array();
+	GameObject.Find("Add Option").GetComponentInChildren(UI.Button).interactable = true;
 }
 function createInstance(prefab : GameObject, parent : GameObject, size : Vector2){
 	//print(pos);

@@ -3,6 +3,7 @@ var nameBox : UI.InputField;
 var userName : String;
 var defaultPath : String;
 var defaultScorePath : String;
+var alertPopupPrefab : GameObject;
 function Start () {
 	defaultScorePath = Application.persistentDataPath;
 	var paths : Array = new Array();
@@ -16,6 +17,15 @@ function Start () {
 		}
 	} 
 	nameBox = GetComponentInChildren(UI.InputField);
+	var xmlDoc : XmlDocument = new XmlDocument();
+    if(File.Exists (Application.persistentDataPath+"/scores.xml"))
+    { 	
+    	var x : XmlNodeList;
+        xmlDoc.Load(Application.persistentDataPath+"/scores.xml");
+        x = xmlDoc.GetElementsByTagName("Name");
+		if(x.Count>0)
+  			nameBox.text = x.Item(x.Count-1).InnerText;
+	}
 }
 function quit(){
 	Application.Quit();
@@ -38,6 +48,11 @@ function readXML(filepath : String, result : Array, tagName : String){
 }
 function proceed(){
 	if(nameBox.text==""){
+		var newPopup : GameObject = Instantiate(alertPopupPrefab);
+		newPopup.transform.SetParent(gameObject.transform);
+		newPopup.transform.position = gameObject.transform.position;
+		newPopup.transform.localScale = new Vector3(1,1,1);
+		newPopup.GetComponentInChildren(UI.Text).text = "Please enter your name!";
 		return;
 	}
 	userName = nameBox.text;
@@ -62,7 +77,7 @@ function proceed(){
 	itemScore.InnerText = "";
 	xmlDoc.Save(defaultScorePath+"/scores.xml");
 	//Application.LoadLevel("question");
-	Application.LoadLevel("list");
+	LevelManager.Load("list");
 }
 function settings(){
 	Application.LoadLevel("settings");
