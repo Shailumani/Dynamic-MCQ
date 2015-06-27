@@ -18,18 +18,36 @@ var Sports :UI.Toggle;
 var GK: UI.Toggle;
 var Aptitude:UI.Toggle;
 var Others :UI.InputField;
+var alertPopupPrefab : GameObject;
 var categoriesInput : UI.Toggle[];
 function Start () {
  	categoriesInput = [Science, Maths, English, Sports, GK, Aptitude];
 }
+
+function giveAlert(message : String){
+	var alertPopup : GameObject = Instantiate(alertPopupPrefab);
+	alertPopup.transform.SetParent(gameObject.transform);
+	alertPopup.transform.position = gameObject.transform.position;
+	alertPopup.transform.localScale = new Vector3(1,1,1);
+	alertPopup.GetComponentInChildren(UI.Text).text = message;
+	alertPopup.GetComponentInChildren(UI.Button).onClick.AddListener(
+		function(){
+			Destroy(alertPopup);
+		}
+	);
+	return;
+}
+
 function proceed(){
     if(nameBox.text==""){    //checking name of author
+    	giveAlert("Please enter your name!");
 		return;
 	}
 	else{
 		userName = nameBox.text;
 	}
 	if(quizNameInput.text==""){   //checking name of  quiz
+		giveAlert("Please enter quiz name!");
 		return;
 	}
 	else{
@@ -37,7 +55,12 @@ function proceed(){
 	}
 	try{
 		noOfQuestions = int.Parse(noOfQuesInput.text);
+		if(noOfQuestions<=0){
+			giveAlert("Please enter valid no. of questions!");
+			return;
+		}
 	}catch(E){
+		giveAlert("Please enter valid no. of questions!");
 		return;
 	}
 	categories = new Array();
@@ -54,6 +77,7 @@ function proceed(){
 		}
 	}
 	if(categories.length==0){
+		giveAlert("Please provide some category!");
 		return;
 	}
 	var xmlDoc : XmlDocument;

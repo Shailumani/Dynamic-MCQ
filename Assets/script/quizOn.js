@@ -170,10 +170,10 @@ function submit(){
 	var itemScore : XmlElement  = x.Item(x.Count-1);
 	itemScore.InnerText = ""+noOfCorrectAns;
 	xmlDoc.Save(defaultScorePath+"/scores.xml");
-	Application.LoadLevel("result");
+	LevelManager.Load("result");
 }
 function replay(){
-	Application.LoadLevel("question");
+	LevelManager.Load("question");
 }
 function onQuit(){
 	Application.LoadLevel("start");

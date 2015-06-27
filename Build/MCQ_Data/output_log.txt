@@ -18,7 +18,7 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Windows.Forms.dll (this message is harmless)
 Loading F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Windows.Forms.dll into Unity Child Domain
-- Completed reload, in  0.135 seconds
+- Completed reload, in  0.170 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -27,40 +27,70 @@ Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_D
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\UnityScript.Lang.dll (this message is harmless)
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Boo.Lang.dll (this message is harmless)
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.dll (this message is harmless)
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1713)
+
 Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Xml.dll (this message is harmless)
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 47.128761 ms
+UnloadTime: 7.762981 ms
 
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 216.
-Total: 15.127213 ms (FindLiveObjects: 0.051316 ms CreateObjectMapping: 0.033158 ms MarkObjects: 15.025371 ms  DeleteObjects: 0.013026 ms)
+Unloading 65 unused Assets to reduce memory usage. Loaded Objects now: 169.
+Total: 0.608296 ms (FindLiveObjects: 0.030000 ms CreateObjectMapping: 0.035921 ms MarkObjects: 0.478031 ms  DeleteObjects: 0.054869 ms)
 
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\System.Drawing.dll (this message is harmless)
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Accessibility.dll (this message is harmless)
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libc
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/.\libc
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libc
-Platform assembly: F:\Study\CV and Intern\IIT Bombay\CT\MCQ _Android\Build\MCQ_Data\Managed\Mono.Posix.dll (this message is harmless)
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libc
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/.\libc
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libc
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/.\libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/.\libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/.\libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/libX11
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/.\/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/lib/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/.\lib/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon
-Fallback handler could not load library F:/Study/CV and Intern/IIT Bombay/CT/MCQ _Android/Build/MCQ_Data/Mono/lib/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.228429 ms
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.666717 ms
 
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 208.
-Total: 0.891716 ms (FindLiveObjects: 0.036316 ms CreateObjectMapping: 0.018158 ms MarkObjects: 0.822637 ms  DeleteObjects: 0.011842 ms)
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 309.
+Total: 0.560137 ms (FindLiveObjects: 0.034342 ms CreateObjectMapping: 0.067500 ms MarkObjects: 0.447241 ms  DeleteObjects: 0.010263 ms)
+
+ArgumentOutOfRangeException: Index is less than 0 or more than or equal to the list count.
+Parameter name: index
+0
+  at System.Collections.ArrayList.ThrowNewArgumentOutOfRangeException (System.String name, System.Object actual, System.String message) [0x00000] in <filename unknown>:0 
+  at System.Collections.ArrayList.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at UnityScript.Lang.Array.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at createTableRow.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.266637 ms
+
+Unloading 66 unused Assets to reduce memory usage. Loaded Objects now: 172.
+Total: 0.434610 ms (FindLiveObjects: 0.035526 ms CreateObjectMapping: 0.017763 ms MarkObjects: 0.337109 ms  DeleteObjects: 0.043026 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.852641 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 434.
+Total: 0.769745 ms (FindLiveObjects: 0.063553 ms CreateObjectMapping: 0.039474 ms MarkObjects: 0.649744 ms  DeleteObjects: 0.015000 ms)
+
+
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+(348.4, 444.6)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.242525 ms
+
+Unloading 203 unused Assets to reduce memory usage. Loaded Objects now: 219.
+Total: 0.577111 ms (FindLiveObjects: 0.039079 ms CreateObjectMapping: 0.033947 ms MarkObjects: 0.414083 ms  DeleteObjects: 0.089606 ms)
+
+ArgumentOutOfRangeException: Index is less than 0 or more than or equal to the list count.
+Parameter name: index
+0
+  at System.Collections.ArrayList.ThrowNewArgumentOutOfRangeException (System.String name, System.Object actual, System.String message) [0x00000] in <filename unknown>:0 
+  at System.Collections.ArrayList.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at UnityScript.Lang.Array.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at quizOver.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
 

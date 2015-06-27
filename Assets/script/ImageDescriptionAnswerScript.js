@@ -70,6 +70,7 @@ function Start () {
 }
 
 function drawOldLineRenderers(lineRenderersArray : Array){
+	totalColliders=0;
 	for(var i=0;i<lineRenderersArray.length;i++){
 		noOfCurVertices = 1;
 		drawnPoints = new Array();

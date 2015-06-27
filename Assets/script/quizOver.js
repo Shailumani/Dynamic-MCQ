@@ -102,7 +102,7 @@ function Start () {
 			resultBox.text = resultBox.text + names[i] + " : " + scores[i] + "\n";
 	}
 	resultBox.text = resultBox.text + "\nCongrats! "+names[names.length-1]+",\n Your score is "+scores[scores.length-1];
-        readXML(Application.persistentDataPath+"/NewFile.xml", credpaths, "address");
+    /*    readXML(Application.persistentDataPath+"/NewFile.xml", credpaths, "address");
 		cred_defaultpath=credpaths[0];
 	    readXML(Application.persistentDataPath+"/NewFile.xml",toggleoption, "Toggleoutput");
      	toggle_answer=toggleoption[0];
@@ -154,7 +154,7 @@ function Start () {
 	     (cur_image_list[k-1] as GameObject).transform.GetComponent.<Renderer>().material.color = Color.yellow;
 	      k--;
 	    }
-    }
+    }*/
     
    
 

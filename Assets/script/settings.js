@@ -82,6 +82,7 @@ function readXML(filepath : String, result : Array, tagName : String){
   		}
 	}
 }
+
 function save(){
 	if(Directory.Exists(pathBox.text)){
 		var xmlDoc : XmlDocument;
@@ -103,6 +104,9 @@ function save(){
 			parentNode = xmlDoc.CreateElement("Number");
 			xmlDoc.DocumentElement.AppendChild(parentNode);
 			parentNode.InnerText = ""+1;
+			parentNode = xmlDoc.CreateElement("isMCQ");
+			xmlDoc.DocumentElement.AppendChild(parentNode);
+			parentNode.InnerText = "0";
 			parentNode = xmlDoc.CreateElement("Name");
 			xmlDoc.DocumentElement.AppendChild(parentNode);
 			parentNode.InnerText = "Sample";
@@ -110,20 +114,26 @@ function save(){
 	        xmlDoc.DocumentElement.PrependChild(parentNode);
 	        var questionNode : XmlElement = xmlDoc.CreateElement("Question");
 	        parentNode.AppendChild(questionNode);
-	        questionNode.InnerText = "This is a sample question";
+	        questionNode.InnerText = "Corruption, Poverty, Illiteracy, Inequality. Who is responsible?";
+	        var questionTypeNode : XmlElement = xmlDoc.CreateElement("QType");
+			parentNode.AppendChild(questionTypeNode);
+			questionTypeNode.InnerText = "0";
+			var optionSetNode : XmlElement = xmlDoc.CreateElement("OptionSet");
+			parentNode.AppendChild(optionSetNode);
+			var optionStarts = ["I am", "Politicians are", "We are", "No one is"];
 		    for(i=0;i<4;i++){
 		    	var optionNode : XmlElement = xmlDoc.CreateElement("Option");
-	        	parentNode.AppendChild(optionNode);
+	        	optionSetNode.AppendChild(optionNode);
 	        	var typeNode : XmlElement = xmlDoc.CreateElement("Type");
 	        	optionNode.AppendChild(typeNode);
 	        	typeNode.InnerText = "0";
 	        	var valueNode : XmlElement = xmlDoc.CreateElement("Value");
 	        	optionNode.AppendChild(valueNode);
-	        	valueNode.InnerText = "This is option no. "+(i+1);
+	        	valueNode.InnerText = optionStarts[i]+" responsible";
 		    }
 		    var answerNode : XmlElement = xmlDoc.CreateElement("Answer");
 	        parentNode.AppendChild(answerNode);
-	        answerNode.InnerText = "2";
+	        answerNode.InnerText = "3";
 	      	xmlDoc.Save(pathBox.text+"/questions.qz");
 		}
 		xmlDoc = new XmlDocument();

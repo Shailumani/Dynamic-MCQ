@@ -392,16 +392,20 @@ function submit(){
 	options[clickedButton-1] = newOptions;*/
 	correctAnswers = new Array();
 	for(var i=0;i<questions.length;i++){
-		if(questions[i]==""){
-			giveAlert("Please fill question No. "+(i+1)+"!");
-			return;
-		}
-		if(questionTypes[i]!=QUESTION_TYPE_IMAGE_D){
-			var thisSelectedAnswers : Array = selectedAnswers[i];
-			if(thisSelectedAnswers.length==0){
-				giveAlert("Please select an answer for question No. "+(i+1)+"!");
+		if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_IMAGE_O){
+			if(questions[i]==""){
+				giveAlert("Please fill question No. "+(i+1)+"!");
 				return;
 			}
+		}else{
+			var myQuestion = new Array();
+			myQuestion = questions[i];
+			if(myQuestion.length==0){
+				giveAlert("Please draw something in question No. "+(i+1)+"!");
+				return;
+			}
+		}
+		if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_IMAGE_D){
 			var myOptions = new Array();
 			myOptions = options[i];
 			for(var j=0;j<myOptions.length;j++){
@@ -409,6 +413,18 @@ function submit(){
 					giveAlert("Please fill all options in question No. "+(i+1)+"!");
 					return;
 				}
+			}
+			var thisSelectedAnswers : Array = selectedAnswers[i];
+			if(thisSelectedAnswers.length==0){
+				giveAlert("Please select an answer for question No. "+(i+1)+"!");
+				return;
+			}
+		}else{
+			var myOption = new Array();
+			myOption = options[i];
+			if(myOption.length==0){
+				giveAlert("Please draw something in question No. "+(i+1)+"!");
+				return;
 			}
 		}
 		/*if(trueAnswers[i]){
