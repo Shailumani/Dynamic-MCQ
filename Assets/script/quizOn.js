@@ -17,6 +17,12 @@ var isMCQArray : Array;
 var prefabOptionText : GameObject;
 var prefabOptionImage : GameObject;
 var prefabButton : GameObject;
+var rightButton : GameObject;
+var leftButton : GameObject;
+var rightButtonPrefab : GameObject;
+var leftButtonPrefab : GameObject;
+var isRightDisplayed : boolean;
+var isLeftDisplayed : boolean;
 var autoIncrement : int;
 //var optionsPanel : GameObject;
 var currentQuestionPanel : GameObject;
@@ -54,6 +60,8 @@ var previousToggles : Array;
 var imageSprites : Array;
 var questionPanelSize : Vector2;
 function Start () {
+	isRightDisplayed = true;
+	isLeftDisplayed = true;
 	newLineRenderers = new Array();
 	currentQuestionType = QUESTION_TYPE_TEXT;
 	currentQuestionPanel = GameObject.Find("TextAnswerPanel");
@@ -280,6 +288,38 @@ function setQuestion(questionNo : int){
 	}
 	populateQuestionPanel(questionNo);
 	//questionBox.text=questions[questionNo-1];
+	if(questionNo==1 && isLeftDisplayed){
+		Destroy(leftButton);
+		isLeftDisplayed = false;
+	}else if(isLeftDisplayed == false){
+		leftButton = Instantiate(leftButtonPrefab);
+		leftButton.name = "Left";
+		leftButton.transform.parent = GameObject.Find("LeftArrowPanel").transform;
+		leftButton.transform.position = leftButton.transform.parent.position;
+		leftButton.transform.localScale = new Vector3(1,1,1);
+		isLeftDisplayed = true;
+		leftButton.GetComponent(UI.Button).onClick.AddListener(
+			function(){
+				changeUI(-1);
+			}
+		);
+	}
+	if(questionNo==questions.length && isRightDisplayed){
+		Destroy(rightButton);
+		isRightDisplayed = false;
+	}else if(isRightDisplayed == false){
+		rightButton = Instantiate(rightButtonPrefab);
+		rightButton.name = "Right";
+		rightButton.transform.parent = GameObject.Find("RightArrowPanel").transform;
+		rightButton.transform.position = rightButton.transform.parent.position;
+		rightButton.transform.localScale = new Vector3(1,1,1);
+		isRightDisplayed = true;
+		rightButton.GetComponent(UI.Button).onClick.AddListener(
+			function(){
+				changeUI(0);
+			}
+		);
+	}
 }
 
 function populateQuestionPanel(questionNo : int){
