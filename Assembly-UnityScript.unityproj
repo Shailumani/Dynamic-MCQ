@@ -52,6 +52,7 @@
      <Compile Include="Assets\script\buttonEvent.js" />
      <Compile Include="Assets\script\createQuestionButtonEvent.js" />
      <Compile Include="Assets\script\createTableRow.js" />
+     <Compile Include="Assets\script\credentials.js" />
      <Compile Include="Assets\script\imageOptionsAnswerScript.js" />
      <Compile Include="Assets\script\imageOptionsScript.js" />
      <Compile Include="Assets\script\optionCreateScript.js" />

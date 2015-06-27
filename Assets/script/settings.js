@@ -3,6 +3,7 @@ import System.IO;
 import System.Xml;
 var pathBox : UI.InputField;
 var paths : Array;
+var confirmationPopupPrefab : GameObject;
 #if UNITY_ANDROID
 var browseClass : AndroidJavaClass;
 #endif
@@ -29,6 +30,24 @@ function Start () {
         pathBox.text = Application.persistentDataPath;
 	}
 }
+function confirmation(returnFunctionName : String){
+	var newConfirmationPopup : GameObject = Instantiate(confirmationPopupPrefab);
+	newConfirmationPopup.transform.SetParent(gameObject.transform);
+	newConfirmationPopup.transform.position = gameObject.transform.position;
+	newConfirmationPopup.transform.localScale = new Vector3(1, 1, 1);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[0].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			Destroy(newConfirmationPopup);
+			Invoke(returnFunctionName, 0.0f);
+		}
+	);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[1].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			Destroy(newConfirmationPopup);
+		}
+	);
+}
+
 
 function onBrowse(){
 #if UNITY_ANDROID

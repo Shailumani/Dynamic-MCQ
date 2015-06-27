@@ -20,6 +20,8 @@ var mainRect : Rect;
 var drawnLineRenderers : Array;
 var createdLineRendererObjects : Array;
 var undoButton : UI.Button;
+var showDraw : LayerMask;
+var hideDraw : LayerMask;
 function Start () {
 	drawnPoints = new Array();
 	drawnLineRenderers = new Array();
@@ -62,6 +64,13 @@ function setImage(imageSprite : Sprite){
 }
 function Update () {
 //print(imagePanel.transform.position);
+	if(startImageScript.isPopupDisplayed){
+		if(Camera.main.cullingMask != hideDraw)
+			Camera.main.cullingMask = hideDraw;
+		return;
+	}else if(Camera.main.cullingMask != showDraw){
+		Camera.main.cullingMask = showDraw;
+	}
 	if(undoButton.interactable==false && drawnLineRenderers.length>0){
 		undoButton.interactable = true;
 	}

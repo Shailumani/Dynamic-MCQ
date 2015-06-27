@@ -20,6 +20,8 @@ var mainRect : Rect;
 var drawnLineRenderers : Array;
 var createdLineRendererObjects : Array;
 var undoButton : UI.Button;
+var showDraw : LayerMask;
+var hideDraw : LayerMask;
 function Start () {
 	drawnPoints = new Array();
 	drawnLineRenderers = new Array();
@@ -62,6 +64,15 @@ function setImage(imageSprite : Sprite){
 	imageBox.sprite = imageSprite;
 }
 
+function Update(){
+	if(startImageScript.isPopupDisplayed){
+		if(Camera.main.cullingMask != hideDraw)
+			Camera.main.cullingMask = hideDraw;
+		return;
+	}else if(Camera.main.cullingMask != showDraw){
+		Camera.main.cullingMask = showDraw;
+	}
+}
 /*function onProceed(){
 		//if(!hasUndoed)
 		//	drawnLineRenderers.push(drawnPoints);

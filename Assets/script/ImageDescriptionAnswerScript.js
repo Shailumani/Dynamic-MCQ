@@ -24,6 +24,8 @@ var totalColliders : int;
 var undoButton : UI.Button;
 var lastPoint : Vector3;
 var thisPoint : Vector3;
+var hideDraw : LayerMask;
+var showDraw : LayerMask;
 function Start () {
 	noOfCollidersHit = 0;
 	correctPoints = 0;
@@ -152,6 +154,13 @@ function readLineRenderers(filepath : String, result : Array){
 }
 function Update () {
 //print(imagePanel.transform.position);
+	if(startImageScript.isPopupDisplayed){
+		if(Camera.main.cullingMask != hideDraw)
+			Camera.main.cullingMask = hideDraw;
+		return;
+	}else if(Camera.main.cullingMask != showDraw){
+		Camera.main.cullingMask = showDraw;
+	}
 	if(undoButton.interactable==false && drawnLineRenderers.length>0){
 		undoButton.interactable = true;
 	}

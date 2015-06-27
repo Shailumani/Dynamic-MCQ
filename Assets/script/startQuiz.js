@@ -4,6 +4,7 @@ var userName : String;
 var defaultPath : String;
 var defaultScorePath : String;
 var alertPopupPrefab : GameObject;
+var confirmationPopupPrefab : GameObject;
 function Start () {
 	defaultScorePath = Application.persistentDataPath;
 	var paths : Array = new Array();
@@ -27,6 +28,26 @@ function Start () {
   			nameBox.text = x.Item(x.Count-1).InnerText;
 	}
 }
+
+function confirmation(returnFunctionName : String){
+	var newConfirmationPopup : GameObject = Instantiate(confirmationPopupPrefab);
+	newConfirmationPopup.transform.SetParent(gameObject.transform);
+	newConfirmationPopup.transform.position = gameObject.transform.position;
+	newConfirmationPopup.transform.localScale = new Vector3(1, 1, 1);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[0].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			Destroy(newConfirmationPopup);
+			Invoke(returnFunctionName, 0.0f);
+		}
+	);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[1].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			Destroy(newConfirmationPopup);
+		}
+	);
+}
+
+
 function quit(){
 	Application.Quit();
 }

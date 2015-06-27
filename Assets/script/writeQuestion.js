@@ -24,6 +24,12 @@ var alertPopupPrefab : GameObject;
 var imageOptionsPrefab : GameObject;
 var imageDescriptionPrefab : GameObject;
 var textQuestionPanelPrefab : GameObject;
+var rightButton : GameObject;
+var leftButton : GameObject;
+var rightButtonPrefab : GameObject;
+var leftButtonPrefab : GameObject;
+var isRightDisplayed : boolean;
+var isLeftDisplayed : boolean;
 var newButtonText : UI.Text;	//text field of a dynamically created button
 var newButton : UI.Button;	//the dynamically created button
 var questions : Array;	//the array where all questions provided by author will be stored
@@ -59,7 +65,11 @@ var questionPanelSize : Vector2;
 var imagePaths : Array;
 var imageSprites : Array;
 var currentQuestionType : int;
+var isPopupDisplayed : boolean;
 function Start () {
+	isPopupDisplayed = false;
+	isRightDisplayed = true;
+	isLeftDisplayed = true;
 	imageSprites = new Array();
 	currentQuestionPanel = GameObject.Find("TextQuestionPanel");
 	mainPanel = GameObject.Find("MainPanel");
@@ -148,20 +158,31 @@ function Update () {
 
 function giveAlert(message : String){
 	var alertPopup : GameObject = Instantiate(alertPopupPrefab);
+	isPopupDisplayed = true;
 	alertPopup.transform.SetParent(gameObject.transform);
 	alertPopup.transform.position = gameObject.transform.position;
 	alertPopup.transform.localScale = new Vector3(1,1,1);
 	alertPopup.GetComponentInChildren(UI.Text).text = message;
+	alertPopup.GetComponentInChildren(UI.Button).onClick.AddListener(
+		function(){
+			isPopupDisplayed = false;
+			Destroy(alertPopup);
+		}
+	);
 	return;
 }
 function addOption(){
 	newPopup = Instantiate(chooseOptionPopupPrefab);
+	isPopupDisplayed = true;
 	newPopup.transform.SetParent(gameObject.transform);
 	newPopup.transform.position = gameObject.transform.position;
 	newPopup.transform.localScale = new Vector3(1,1,1);
 	var addButton : UI.Button = GameObject.Find("Add").GetComponent(UI.Button);
 	addButton.onClick.AddListener(
-		onAddNow
+		function(){
+			isPopupDisplayed = false;
+			Invoke("onAddNow", 0.0f);
+		}
 	);
 }
 
@@ -444,7 +465,60 @@ function setQuestion(questionNo : int){
 		}
 	}
 	populateQuestionPanel(questionNo);
+	if(questionNo==1 && isLeftDisplayed){
+		Destroy(leftButton);
+		isLeftDisplayed = false;
+	}else if(isLeftDisplayed == false){
+		leftButton = Instantiate(leftButtonPrefab);
+		leftButton.name = "Left";
+		leftButton.transform.parent = GameObject.Find("LeftArrowPanel").transform;
+		leftButton.transform.position = leftButton.transform.parent.position;
+		leftButton.transform.localScale = new Vector3(1,1,1);
+		isLeftDisplayed = true;
+		leftButton.GetComponent(UI.Button).onClick.AddListener(
+			function(){
+				changeUI(-1);
+			}
+		);
+	}
+	if(questionNo==questions.length && isRightDisplayed){
+		Destroy(rightButton);
+		isRightDisplayed = false;
+	}else if(isRightDisplayed == false){
+		rightButton = Instantiate(rightButtonPrefab);
+		rightButton.name = "Right";
+		rightButton.transform.parent = GameObject.Find("RightArrowPanel").transform;
+		rightButton.transform.position = rightButton.transform.parent.position;
+		rightButton.transform.localScale = new Vector3(1,1,1);
+		isRightDisplayed = true;
+		rightButton.GetComponent(UI.Button).onClick.AddListener(
+			function(){
+				changeUI(0);
+			}
+		);
+	}
 	//questionBox.text=questions[questionNo-1];
+}
+
+function confirmation(returnFunctionName : String){
+	isPopupDisplayed = true;
+	var newConfirmationPopup : GameObject = Instantiate(confirmationPopupPrefab);
+	newConfirmationPopup.transform.SetParent(gameObject.transform);
+	newConfirmationPopup.transform.position = gameObject.transform.position;
+	newConfirmationPopup.transform.localScale = new Vector3(1, 1, 1);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[0].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			isPopupDisplayed = false;
+			Destroy(newConfirmationPopup);
+			Invoke(returnFunctionName, 0.0f);
+		}
+	);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[1].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			isPopupDisplayed = false;
+			Destroy(newConfirmationPopup);
+		}
+	);
 }
 
 function populateQuestionPanel(questionNo : int){

@@ -1,22 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\quizOn.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\quizOver.js">
     <Files>
-      <File FileName="Assets\script\quizOn.js" Line="307" Column="40" />
-      <File FileName="Assets\script\createTableHeading.cs" Line="1" Column="1" />
-      <File FileName="Assets\script\SelectQuestions.js" Line="1" Column="1" />
-      <File FileName="Assets\script\writeQuestion.js" Line="1" Column="1" />
-      <File FileName="Assets\script\optionCreateScript.js" Line="1" Column="1" />
-      <File FileName="Assets\script\buttonEvent.js" Line="1" Column="1" />
-      <File FileName="Assets\script\toggleEvent.js" Line="1" Column="1" />
-      <File FileName="Assets\script\readDirectory.js" Line="1" Column="1" />
-      <File FileName="Assets\script\createTableRow.js" Line="1" Column="1" />
-      <File FileName="Assets\script\startQuiz.js" Line="1" Column="1" />
-      <File FileName="Assets\Standard Assets\LevelManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Standard Assets\NotificationPopup.cs" Line="1" Column="1" />
-      <File FileName="Assets\Standard Assets\Alert.cs" Line="1" Column="1" />
-      <File FileName="Assets\Standard Assets\Browse.cs" Line="1" Column="1" />
-      <File FileName="Assets\script\ImageDescriptionScript.js" Line="1" Column="1" />
+      <File FileName="Assets\script\quizOver.js" Line="56" Column="14" />
+      <File FileName="Assets\script\writeQuestion.js" Line="522" Column="2" />
+      <File FileName="Assets\script\imageOptionsScript.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

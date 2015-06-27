@@ -19,6 +19,7 @@ var prefabOptionImage : GameObject;
 var prefabButton : GameObject;
 var rightButton : GameObject;
 var leftButton : GameObject;
+var confirmationPopupPrefab : GameObject;
 var rightButtonPrefab : GameObject;
 var leftButtonPrefab : GameObject;
 var isRightDisplayed : boolean;
@@ -59,7 +60,9 @@ var questionTypes : Array;
 var previousToggles : Array;
 var imageSprites : Array;
 var questionPanelSize : Vector2;
+var isPopupDisplayed : boolean;
 function Start () {
+	isPopupDisplayed = false;
 	isRightDisplayed = true;
 	isLeftDisplayed = true;
 	newLineRenderers = new Array();
@@ -321,6 +324,28 @@ function setQuestion(questionNo : int){
 		);
 	}
 }
+
+function confirmation(returnFunctionName : String){
+	var newConfirmationPopup : GameObject = Instantiate(confirmationPopupPrefab);
+	isPopupDisplayed = true;
+	newConfirmationPopup.transform.SetParent(gameObject.transform);
+	newConfirmationPopup.transform.position = gameObject.transform.position;
+	newConfirmationPopup.transform.localScale = new Vector3(1, 1, 1);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[0].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			Destroy(newConfirmationPopup);
+			isPopupDisplayed = false;
+			Invoke(returnFunctionName, 0.0f);
+		}
+	);
+	newConfirmationPopup.GetComponentsInChildren(UI.Button)[1].GetComponent(UI.Button).onClick.AddListener(
+		function(){
+			isPopupDisplayed = false;
+			Destroy(newConfirmationPopup);
+		}
+	);
+}
+
 
 function populateQuestionPanel(questionNo : int){
 	switch(parseInt(questionTypes[questionNo-1].ToString())){
