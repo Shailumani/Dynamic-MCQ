@@ -29,6 +29,32 @@ function Start () {
         xmlDoc.Save(Application.persistentDataPath+"/settings.xml");
         pathBox.text = Application.persistentDataPath;
 	}
+	if(!File.Exists(Application.persistentDataPath+"/NewFile.xml")){
+		createNewFile();
+	}
+}
+
+function createNewFile(){
+	var xmlDoc = new XmlDocument();
+	        var xmlDeclaration : XmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0","utf-8",null);
+	        var rootNode : XmlElement = xmlDoc.CreateElement("Reward");
+	        xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement); 
+	        xmlDoc.AppendChild(rootNode);
+        
+        //var flagNode : XmlElement = xmlDoc.CreateElement("Flag");
+        //xmlDoc.DocumentElement.AppendChild(flagNode);
+               	    
+        var PathNode : XmlElement=xmlDoc.CreateElement("address");
+	    PathNode.InnerText = "";
+	    rootNode.AppendChild(PathNode);
+        
+   	  
+        var ToggleNode : XmlElement=xmlDoc.CreateElement("Toggleoutput");
+	    ToggleNode.InnerText = "Star";
+	    rootNode.AppendChild(ToggleNode);
+        
+   	     	  
+        xmlDoc.Save(Application.persistentDataPath+"/NewFile.xml");
 }
 function confirmation(returnFunctionName : String){
 	var newConfirmationPopup : GameObject = Instantiate(confirmationPopupPrefab);

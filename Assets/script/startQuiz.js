@@ -51,6 +51,22 @@ function confirmation(returnFunctionName : String){
 function quit(){
 	Application.Quit();
 }
+function giveAlert(message : String){
+	var alertPopup : GameObject = Instantiate(alertPopupPrefab);
+	alertPopup.transform.SetParent(gameObject.transform);
+	alertPopup.transform.position = gameObject.transform.position;
+	alertPopup.transform.localScale = new Vector3(1,1,1);
+	alertPopup.GetComponentInChildren(UI.Text).text = message;
+	alertPopup.GetComponentInChildren(UI.Button).onClick.AddListener(
+		function(){
+			Destroy(alertPopup);
+		}
+	);
+	return;
+}
+function reward(){
+    Application.LoadLevel("Credentials");
+}
 function createQuiz(){
 	Application.LoadLevel("createQuiz");
 }
@@ -69,11 +85,7 @@ function readXML(filepath : String, result : Array, tagName : String){
 }
 function proceed(){
 	if(nameBox.text==""){
-		var newPopup : GameObject = Instantiate(alertPopupPrefab);
-		newPopup.transform.SetParent(gameObject.transform);
-		newPopup.transform.position = gameObject.transform.position;
-		newPopup.transform.localScale = new Vector3(1,1,1);
-		newPopup.GetComponentInChildren(UI.Text).text = "Please enter your name!";
+		giveAlert("Please enter your name!");
 		return;
 	}
 	userName = nameBox.text;

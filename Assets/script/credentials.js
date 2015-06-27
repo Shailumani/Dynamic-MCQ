@@ -76,37 +76,37 @@ function save(){
 		    }
 		    
 		 }
-		var xmlDoc : XmlDocument = new XmlDocument();
-        var xmlDeclaration : XmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0","utf-8",null);
+		var xmlDoc = new XmlDocument();
+	        var xmlDeclaration : XmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0","utf-8",null);
+	        var rootNode : XmlElement = xmlDoc.CreateElement("Reward");
+	        xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement); 
+	        xmlDoc.AppendChild(rootNode);
         
-        var rootNode : XmlElement = xmlDoc.CreateElement("Reward");
-        xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement); 
-        xmlDoc.AppendChild(rootNode);
-        
-        var flagNode : XmlElement = xmlDoc.CreateElement("Flag");
-        xmlDoc.DocumentElement.AppendChild(flagNode);
-        rootNode.AppendChild(flagNode);
+        //var flagNode : XmlElement = xmlDoc.CreateElement("Flag");
+        //xmlDoc.DocumentElement.AppendChild(flagNode);
                	    
         var PathNode : XmlElement=xmlDoc.CreateElement("address");
 	    PathNode.InnerText = path;
-	    xmlDoc.DocumentElement.AppendChild(PathNode);
+	    rootNode.AppendChild(PathNode);
         
    	  
         var ToggleNode : XmlElement=xmlDoc.CreateElement("Toggleoutput");
 	    ToggleNode.InnerText = image_name;
-	    xmlDoc.DocumentElement.AppendChild(ToggleNode);
+	    rootNode.AppendChild(ToggleNode);
         
    	    
    	     	  
         xmlDoc.Save(Application.persistentDataPath+"/NewFile.xml");
    	   
 		
-   	   	Application.LoadLevel("settings");
+   	   	Application.LoadLevel("start");
 }
 
 function cancel(){
-	Application.LoadLevel("settings");
+	Application.LoadLevel("start");
 }
+
+
 function Update () {
 
 }
