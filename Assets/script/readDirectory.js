@@ -24,6 +24,9 @@ function Start () {
 function onBack(){
 	Application.LoadLevel("start");
 }
+function onCreate(){
+	LevelManager.Load("createQuiz");
+}
 function readXML(filepath : String, result : Array, tagName : String){
     var xmlDoc : XmlDocument = new XmlDocument();
     if(File.Exists (filepath))

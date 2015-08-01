@@ -39,23 +39,23 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Softwares/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Softwares/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\script\createTableHeading.cs" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Softwares/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="System.Windows.Forms">
- <HintPath>F:/Abhishek's drive/iitb/VErsion control/Final Project/MCQ_Android3/MCQ_FinalProject/Assets/Plugins/System.Windows.Forms.dll</HintPath>
+ <HintPath>F:/Softwares/MCQ_FinalProject/Assets/Plugins/System.Windows.Forms.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ <HintPath>D:/Softwares/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

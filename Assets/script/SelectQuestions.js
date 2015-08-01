@@ -108,7 +108,7 @@ function proceed(){
 	LevelManager.Load("createQuestion");
 }
 function Cancel(){
-	LevelManager.Load("start");
+	LevelManager.Load("editList");
 }
 function Update () {
 

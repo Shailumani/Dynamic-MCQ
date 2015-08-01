@@ -62,68 +62,81 @@ var noOfOptions : Array;
 var optionsTypes : Array;
 var mainPanel : GameObject;
 var questionPanelSize : Vector2;
-var imagePaths : Array;
 var imageSprites : Array;
 var currentQuestionType : int;
 var isPopupDisplayed : boolean;
+var categories : Array;
+var authors : Array;
+var quizNames : Array;
+var isBeingEdited : boolean;
 function Start () {
 	isPopupDisplayed = false;
 	isRightDisplayed = true;
 	isLeftDisplayed = true;
-	imageSprites = new Array();
+	autoIncrement = 0;
+	clickedButton=1;
+	offsetButton = -1;
+	currentQuestionType = 5;
 	currentQuestionPanel = GameObject.Find("TextQuestionPanel");
 	mainPanel = GameObject.Find("MainPanel");
 	mainRect = mainPanel.GetComponent(RectTransform).rect;
 	questionPanelSize = new Vector2(mainRect.width, mainRect.height);
 	interfaceRect = GameObject.Find("Interface").GetComponent(RectTransform).rect;
-	optionsTypes = new Array();
-	imagePaths = new Array();
-	questionTypes = new Array();
-	currentQuestionType = QUESTION_TYPE_TEXT;
-	autoIncrement = 0;
-	previousToggles = new Array();
-	noOfOptions = new Array();
 	var paths : Array = new Array();
 	var noOfQuestionsArray = new Array();
+	var isBeingEditedArray = new Array();
 	isMCQArray = new Array();
+	categories = new Array();
+	authors = new Array();
+	quizNames = new Array();
+	previousToggles = new Array();
 	readXML(Application.persistentDataPath+"/settings.xml", paths, "path");
 	readXML(Application.persistentDataPath+"/temp.xml", noOfQuestionsArray, "Number");
 	readXML(Application.persistentDataPath+"/temp.xml", isMCQArray, "isMCQ");
+	readXML(Application.persistentDataPath+"/temp.xml", isBeingEditedArray, "isBeingEdited");
+	readXML(Application.persistentDataPath+"/temp.xml", categories, "Category");
+	readXML(Application.persistentDataPath+"/temp.xml", authors, "Author");
+	readXML(Application.persistentDataPath+"/temp.xml", quizNames, "Name");
 	noOfQuestions = int.Parse(noOfQuestionsArray[0]);
 	defaultPath = paths[0]; 
-	var i : int;
-	clickedButton=1;
-	questions = new Array();
+	isBeingEdited = parseInt(isBeingEditedArray[0].ToString())? true : false;
+	print(isBeingEdited);
+	if(!isBeingEdited){
+		imageSprites = new Array();
+		optionsTypes = new Array();
+		questionTypes = new Array();
+		questions = new Array();
+		selectedAnswers = new Array();
+		options = new Array();
+		for(var i=0;i<noOfQuestions;i++){
+			questions.push("");
+			imageSprites.push("");
+			questionTypes.push(QUESTION_TYPE_TEXT);
+			var newOptions = new Array();
+			var newOptionsTypes = new Array();
+			selectedAnswers.push(new Array());
+			//noOfOptions.push(2);
+			for(var j=0;j<2;j++){
+				newOptions.push("");
+				newOptionsTypes.push(TYPE_TEXT);
+			}
+			optionsTypes.push(newOptionsTypes);
+			options.push(newOptions);
+			//falseAnswers.push(false);
+			//trueAnswers.push(true);
+		}
+	}else{
+		loadQuiz();
+	}
 	//var xMin = -Screen.width/2;
 	//var xMax = Screen.width/2;
 	var y = Screen.height - 20;
 	var xMin = -interfaceRect.width/2;
 	var xMax = interfaceRect.width/2;
-	offsetButton = -1;
 	changedAuto = false;
-	selectedAnswers = new Array();
-	options = new Array();
 	GameObject.Find("Buttons").GetComponent(UI.GridLayoutGroup).cellSize = new Vector2(GameObject.Find("Buttons").GetComponent(RectTransform).rect.width/noOfQuestions-1, 30);
 	//falseAnswers=new Array();
 	//trueAnswers=new Array();
-	for(i=0;i<noOfQuestions;i++){
-		questions.push("");
-		imagePaths.push("");
-		imageSprites.push("");
-		questionTypes.push(QUESTION_TYPE_TEXT);
-		var newOptions = new Array();
-		var newOptionsTypes = new Array();
-		selectedAnswers.push(new Array());
-		//noOfOptions.push(2);
-		for(var j=0;j<2;j++){
-			newOptions.push("");
-			newOptionsTypes.push(TYPE_TEXT);
-		}
-		optionsTypes.push(newOptionsTypes);
-		options.push(newOptions);
-		//falseAnswers.push(false);
-		//trueAnswers.push(true);
-	}
 	changedAuto=true;
 	var buttonWidth = (xMax-xMin)/questions.length;
 	for(i=0;i<questions.length;i++){
@@ -152,6 +165,106 @@ function Start () {
 	buttons[1+offsetButton].GetComponent(UI.Button).colors.normalColor=Color.cyan;
 	changeUI(1);	
 }
+
+function loadQuiz(){
+	var questionsFilePath = new Array();
+	questionTypes = new Array();
+	selectedAnswers = new Array();
+	questions = new Array();
+	options = new Array();
+	optionsTypes = new Array();
+	imageSprites = new Array();
+	var currentAnswers = new Array();
+	readXML(Application.persistentDataPath+"/temp.xml", questionsFilePath, "Path");
+	var questionsFileName : String = questionsFilePath[0].ToString();
+	readXML(questionsFileName, questionTypes, "QType");
+	readXML(questionsFileName, currentAnswers, "Answer");
+	readQuestionsFile(questionsFileName, questions, options, optionsTypes, imageSprites);
+	noOfQuestions = options.length;
+	for(var i=0;i<noOfQuestions;i++){
+		var thisSelectedAnswers = new Array();
+		var splitedArray = currentAnswers[i].ToString().Split(","[0]);
+		for(var j=0;j<splitedArray.length;j++){
+			thisSelectedAnswers.push(splitedArray[j]);
+		}
+		selectedAnswers.push(thisSelectedAnswers);
+	}
+}
+function readQuestionsFile(filepath : String, questionsResult : Array, optionsResult : Array, optionTypesResult : Array, imageSpritesResult : Array){
+	var xmlDoc : XmlDocument = new XmlDocument();
+	var optionsSet : Array;
+	var optionsTypeSet : Array;
+	var lineRendererSet : Array;
+	if(File.Exists(filepath)){
+		var setNodeList : XmlNodeList;
+		xmlDoc.Load(filepath);
+		setNodeList = xmlDoc.GetElementsByTagName("Set");
+		for(var i=0;i<setNodeList.Count;i++){
+			optionsSet = new Array();
+			optionsTypeSet = new Array();
+			var innerXmlDoc : XmlDocument = new XmlDocument();
+			innerXmlDoc.LoadXml(setNodeList.Item(i).OuterXml);
+			if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_IMAGE_O){
+				questionsResult.push(innerXmlDoc.GetElementsByTagName("Question").Item(0).InnerText);
+			}
+			if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_IMAGE_D){
+				var y : XmlNodeList;
+				y = innerXmlDoc.GetElementsByTagName("Value");
+				var z : XmlNodeList;
+				z = innerXmlDoc.GetElementsByTagName("Type");
+				for(var j=0;j<y.Count;j++){
+					optionsTypeSet.push(z.Item(j).InnerText);
+					if(parseInt(z.Item(j).InnerText.ToString())==TYPE_TEXT)
+						optionsSet.push(y.Item(j).InnerText);
+					else
+						optionsSet.push(stringToSprite(y.Item(j).InnerText));
+				}
+				optionsResult.push(optionsSet);
+			}
+			optionTypesResult.push(optionsTypeSet);
+			if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_TEXT){
+				lineRendererSet = new Array();
+				imageSpritesResult.push(stringToSprite(innerXmlDoc.GetElementsByTagName("Image").Item(0).InnerText));
+				var lines : XmlNodeList;
+				lines = innerXmlDoc.GetElementsByTagName("Line");
+				for(j=0;j<lines.Count;j++){
+					var lineXmlDoc : XmlDocument = new XmlDocument();
+					lineXmlDoc.LoadXml(lines.Item(j).OuterXml);
+					var points : XmlNodeList;
+					points = lineXmlDoc.GetElementsByTagName("Point");
+					var drawnPoints = new Array();
+					for(var k=0;k<points.Count;k++){
+						var thisPoint = new Vector2(0, 0);
+						var pointXmlDoc : XmlDocument = new XmlDocument();
+						pointXmlDoc.LoadXml(points.Item(k).OuterXml);
+						var xCoordinate : XmlNodeList;
+						xCoordinate = pointXmlDoc.GetElementsByTagName("X");
+						thisPoint.x = parseFloat(xCoordinate.Item(0).InnerText);
+						var yCoordinate : XmlNodeList;
+						yCoordinate = pointXmlDoc.GetElementsByTagName("Y");
+						thisPoint.y = parseFloat(yCoordinate.Item(0).InnerText);
+						drawnPoints.push(thisPoint);
+					}
+					lineRendererSet.push(drawnPoints);
+				}
+				if(parseInt(questionTypes[i].ToString())==QUESTION_TYPE_IMAGE_D)
+					optionsResult.push(lineRendererSet);
+				else
+					questionsResult.push(lineRendererSet);
+			}
+			else
+				imageSpritesResult.push("");
+		}
+	}
+}
+
+function stringToSprite(byte64String : String){
+	var bytes : byte[] = System.Convert.FromBase64String(byte64String);
+ 	var tex : Texture2D = new Texture2D(100,100);
+ 	tex.LoadImage(bytes);
+ 	return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.0f));
+}
+
 function Update () {
 
 }
@@ -253,12 +366,6 @@ function browseForImage(){
 }
 
 function createFile(){
-	var categories = new Array();
-	var authors = new Array();
-	var quizNames = new Array();
-	readXML(Application.persistentDataPath+"/temp.xml", categories, "Category");
-	readXML(Application.persistentDataPath+"/temp.xml", authors, "Author");
-	readXML(Application.persistentDataPath+"/temp.xml", quizNames, "Name");
 	var xmlDoc : XmlDocument;
 	xmlDoc = new XmlDocument();
     var xmlDeclaration : XmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0","utf-8",null);
@@ -291,12 +398,12 @@ function createFile(){
 		questionTypeNode.InnerText = questionTypes[i].ToString();
 		var questionNode : XmlElement = xmlDoc.CreateElement("Question");
 		parentNode.AppendChild(questionNode);
-		if(questionTypes[i]!=QUESTION_TYPE_IMAGE_O){
+		if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_IMAGE_O){
 			questionNode.InnerText = questions[i];
 		}
 		var optionSetNode : XmlElement = xmlDoc.CreateElement("OptionSet");
 		parentNode.AppendChild(optionSetNode);
-		if(questionTypes[i]!=QUESTION_TYPE_IMAGE_D){
+		if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_IMAGE_D){
 			var myOptions : Array;
 			var myOptionsTypes : Array;
 			myOptions = new Array();
@@ -320,18 +427,18 @@ function createFile(){
 				}
 			}
 		}
-		if(questionTypes[i]!=QUESTION_TYPE_TEXT){
+		if(parseInt(questionTypes[i].ToString())!=QUESTION_TYPE_TEXT){
 			var imageNode : XmlElement = xmlDoc.CreateElement("Image");
 			parentNode.AppendChild(imageNode);
 			imageNode.InnerText = spriteToString(imageSprites[i]);
 			var drawnLineRenderers : Array;
-			if(questionTypes[i]==QUESTION_TYPE_IMAGE_D)
+			if(parseInt(questionTypes[i].ToString())==QUESTION_TYPE_IMAGE_D)
 				drawnLineRenderers = new Array(options[i]);
 			else	
 				drawnLineRenderers = new Array(questions[i]);
 			while(drawnLineRenderers.length>0){
 				var lineNode : XmlElement = xmlDoc.CreateElement("Line");
-				if(questionTypes[i]==QUESTION_TYPE_IMAGE_D){
+				if(parseInt(questionTypes[i].ToString())==QUESTION_TYPE_IMAGE_D){
 					optionSetNode.AppendChild(lineNode);
 				}else{
 					questionNode.AppendChild(lineNode);
@@ -459,7 +566,7 @@ function readXML(filepath : String, result : Array, tagName : String){
 
 function setQuestion(questionNo : int){
 	clickedButton=questionNo;
-	if(questionTypes[questionNo-1]!=currentQuestionType){
+	if(parseInt(questionTypes[questionNo-1].ToString())!=currentQuestionType){
 		switch(parseInt(questionTypes[questionNo-1].ToString())){
 			case QUESTION_TYPE_TEXT : switchToText(questionNo);
 									  break;
@@ -484,7 +591,7 @@ function setQuestion(questionNo : int){
 	if(questionNo==1 && isLeftDisplayed){
 		Destroy(leftButton);
 		isLeftDisplayed = false;
-	}else if(isLeftDisplayed == false){
+	}else if(isLeftDisplayed == false && questionNo!=1){
 		leftButton = Instantiate(leftButtonPrefab);
 		leftButton.name = "Left";
 		leftButton.transform.parent = GameObject.Find("LeftArrowPanel").transform;
@@ -500,7 +607,7 @@ function setQuestion(questionNo : int){
 	if(questionNo==questions.length && isRightDisplayed){
 		Destroy(rightButton);
 		isRightDisplayed = false;
-	}else if(isRightDisplayed == false){
+	}else if(isRightDisplayed == false && questionNo!=questions.length){
 		rightButton = Instantiate(rightButtonPrefab);
 		rightButton.name = "Right";
 		rightButton.transform.parent = GameObject.Find("RightArrowPanel").transform;
@@ -601,7 +708,8 @@ function saveCurrentState(){
 
 function changeUI(questionNumber : int){
 	print("changing");
-	saveCurrentState();
+	if(clickedButton!=questionNumber)
+		saveCurrentState();
 	lastButton=buttons[offsetButton + clickedButton].GetComponent(UI.Button);
 	lastButton.colors.normalColor=Color.grey;
 	if(questionNumber>=1){
@@ -644,6 +752,7 @@ function updateOptions(myOptions : Array){
 			newOption.transform.localScale = new Vector3(1,1,1);
 			newOption.name = "OptionCreateText";
 			newOption.GetComponentInChildren(UI.InputField).text = myOptions[i];
+			print("Option created");
 		}
 		else{
 			newOption = Instantiate(prefabOptionCreateImage);
@@ -672,6 +781,7 @@ function switchType(){
 		switchToImage();
 	}else{
 		switchToText(clickedButton);
+		saveCurrentState();
 		changeUI(clickedButton);
 	}
 }
@@ -701,9 +811,8 @@ function onSwitchNow(){
 }
 
 function completeSwitchAction(retrievedPath : String){
-	imagePaths[clickedButton-1] = retrievedPath;
 	var thisTexture : Texture2D = new Texture2D(100, 100);
-	var www : WWW = new WWW("file:///" + imagePaths[clickedButton-1]);
+	var www : WWW = new WWW("file:///" + retrievedPath);
 	www.LoadImageIntoTexture(thisTexture);
 	imageSprites[clickedButton-1] = 
 					Sprite.Create(thisTexture, new Rect(0, 0, thisTexture.width, thisTexture.height), new Vector2(0.5f, 0.0f));

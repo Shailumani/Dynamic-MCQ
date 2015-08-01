@@ -68,7 +68,7 @@ function reward(){
     Application.LoadLevel("Credentials");
 }
 function createQuiz(){
-	Application.LoadLevel("createQuiz");
+	LevelManager.Load("editList");
 }
 function readXML(filepath : String, result : Array, tagName : String){
     var xmlDoc : XmlDocument = new XmlDocument();

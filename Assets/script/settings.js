@@ -112,7 +112,7 @@ function readXML(filepath : String, result : Array, tagName : String){
 function save(){
 	if(Directory.Exists(pathBox.text)){
 		var xmlDoc : XmlDocument;
-		if(!File.Exists(pathBox.text+"/questions.qz")){
+		if(!File.Exists(pathBox.text+"/Sample.qz")){
 			xmlDoc = new XmlDocument();
 	        var xmlDeclaration : XmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0","utf-8",null);
 	        var rootNode : XmlElement = xmlDoc.CreateElement("MCQ");
@@ -160,7 +160,7 @@ function save(){
 		    var answerNode : XmlElement = xmlDoc.CreateElement("Answer");
 	        parentNode.AppendChild(answerNode);
 	        answerNode.InnerText = "3";
-	      	xmlDoc.Save(pathBox.text+"/questions.qz");
+	      	xmlDoc.Save(pathBox.text+"/Sample.qz");
 		}
 		xmlDoc = new XmlDocument();
 		xmlDoc.Load(Application.persistentDataPath+"/settings.xml");

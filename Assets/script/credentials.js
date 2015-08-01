@@ -40,42 +40,46 @@ function Start () {
  	pathBoxcredential =  GameObject.Find("Path").GetComponent(UI.InputField);
  	//pathBoxcredential.text=Application.persistentDataPath;
 	toggles = GameObject.Find("CategoryInput").GetComponentsInChildren(UI.Toggle);
+	var pathSaved : Array = new Array();
+	var credentialSaved : Array = new Array();
+	readXML(Application.persistentDataPath+"/NewFile.xml", pathSaved, "address");
+	readXML(Application.persistentDataPath+"/NewFile.xml", credentialSaved, "Toggleoutput");
+	if(pathSaved.length>0){
+		if (!File.Exists(pathBoxcredential.text)){
+			pathBoxcredential.text = pathSaved[0].ToString();
+		}
+	}
+	if (!File.Exists(pathBoxcredential.text)){
+		for(var i=0;i<5;i++){
+			if(CategoriesInput[i].Equals(credentialSaved[0].ToString())){
+				toggles[i].GetComponent(UI.Toggle).isOn = true;
+			}
+		}
+	}
 	
   }
-function readXML(filepath : String, result : Array, tagName : String){
-    var xmlDoc : XmlDocument = new XmlDocument();
-    if(File.Exists (filepath))
-    { 	
-    	var x : XmlNodeList;
-        xmlDoc.Load( filepath );
-        x = xmlDoc.GetElementsByTagName(tagName);
-		for (var i=0;i<x.Count;i++)
-  		{ 
-  			result.push(x.Item(i).InnerText);
-  		}
-	}
-}
+
 function save(){
-       if(pathBoxcredential.text.length==0) 
-		{
+		if(!File.Exists(pathBoxcredential.text)){
 			if(toggles[0].GetComponent(UI.Toggle).isOn){
-			 image_name=CategoriesInput[0];	
+			 	image_name=CategoriesInput[0];	
 					
 			}
 			else if (toggles[1].GetComponent(UI.Toggle).isOn){
-			 image_name=CategoriesInput[1];	  
+			 	image_name=CategoriesInput[1];	  
 			}
 			else if (toggles[2].GetComponent(UI.Toggle).isOn){
-			 image_name=CategoriesInput[2];	  			
+			 	image_name=CategoriesInput[2];	  			
 			}
 			else if (toggles[3].GetComponent(UI.Toggle).isOn){
-			   image_name=CategoriesInput[3];	
+			   	image_name=CategoriesInput[3];	
 			}
-			else{
+			else if (toggles[3].GetComponent(UI.Toggle).isOn){
 			    image_name=CategoriesInput[4];	
+		    }else{
+		    	return;
 		    }
-		    
-		 }
+		}
 		var xmlDoc = new XmlDocument();
 	        var xmlDeclaration : XmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0","utf-8",null);
 	        var rootNode : XmlElement = xmlDoc.CreateElement("Reward");
@@ -86,7 +90,7 @@ function save(){
         //xmlDoc.DocumentElement.AppendChild(flagNode);
                	    
         var PathNode : XmlElement=xmlDoc.CreateElement("address");
-	    PathNode.InnerText = path;
+	    PathNode.InnerText = pathBoxcredential.text;
 	    rootNode.AppendChild(PathNode);
         
    	  
@@ -100,6 +104,20 @@ function save(){
    	   
 		
    	   	Application.LoadLevel("start");
+}
+
+function readXML(filepath : String, result : Array, tagName : String){
+    var xmlDoc : XmlDocument = new XmlDocument();
+    if(File.Exists (filepath))
+    { 	
+    	var x : XmlNodeList;
+        xmlDoc.Load( filepath );
+        x = xmlDoc.GetElementsByTagName(tagName);
+		for (var i=0;i<x.Count;i++)
+  		{ 
+  			result.push(x.Item(i).InnerText);
+  		}
+	}
 }
 
 function cancel(){
